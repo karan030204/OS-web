@@ -1,37 +1,53 @@
 import React, { useState } from "react";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import Stack from "@mui/material/Stack";
-import Button from "@mui/material/Button";
-import DeleteIcon from "@mui/icons-material/Delete";
+import axios from "axios";
+import {
+  Table,
+  TableHead,
+  TableCell,
+  TableContainer,
+  TableRow,
+  Paper,
+  Stack,
+  Button,
+  IconButton,
+  Box,
+  TextField,
+  TableBody,
+} from "@mui/material";
 import "./PriorityTable.css";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 function PriorityTable() {
-  const rows = [createData("1", "", "", "", "")];
+  const Processes = [createData("1", "", "", "", "", "", "", "")];
 
   function createData(
     PID,
     Priority,
     Arrival_Time,
     Burst_Time,
-    Completion_Time
+    Completion_Time ,
+    TurnAround_Time,
+    Waiting_Time,
+    Response_Time
   ) {
-    return { PID, Priority, Arrival_Time, Burst_Time, Completion_Time };
+    return {
+      PID,
+      Priority,
+      Arrival_Time,
+      Burst_Time,
+      Completion_Time,
+      TurnAround_Time,
+      Waiting_Time,
+      Response_Time,
+    };
   }
 
-  const [process, setProcess] = useState(rows);
+  const [process, setProcess] = useState(Processes);
 
   //Add Process
   const addProcess = () => {
     let pid = Math.floor(100 * Math.random());
-    setProcess([...process, createData(pid, "", "", "", "")]);
+    setProcess([...process, createData(pid, "", "", "", "", "", "", "")]);
   };
 
   //Delete Process
@@ -43,20 +59,46 @@ function PriorityTable() {
     setProcess(newProcess);
   };
 
-  const Priority = (e) => {
-    console.log(e.target.value);
+  const Priority = (e, i) => {
+    const t = process;
+    t[i]["Priority"] = e.target.value;
+    setProcess(t);
   };
-  const arrivalTime = (e) => {
-    console.log(e.target.value);
+  const arrivalTime = (e, i) => {
+    const t = process;
+    t[i]["Arrival_Time"] = e.target.value;
+    setProcess(t);
   };
   const burstTime = (e, i) => {
     const t = process;
     t[i]["Burst_Time"] = e.target.value;
     setProcess(t);
-    console.log("t", t);
+    // console.log(t);
   };
+
+  // const priorityPreemptive = require("../models/CPUScheduling");
+
   //Result
-  const Result = () => {};
+  const Result = async (process) => {
+
+      
+      // console.log(priorityScheduling(process));
+      // let data = process;
+      // const res = await axios.post("http://localhost:4000/schedule", {data : [...process]});
+      try{
+      const data = await axios.post("http://localhost:4000/schedule", {process : [...process]});
+      const myData = data.data.process;
+      setProcess(myData);
+      console.log(myData);
+    }catch(err){
+        console.log(err);
+    }
+
+
+  }
+
+
+
 
   return (
     <>
@@ -153,7 +195,7 @@ function PriorityTable() {
                   fontWeight: "100",
                 }}
               >
-                Respnse Time(RT)
+                Response Time(RT)
               </TableCell>
               <TableCell
                 align="center"
@@ -180,7 +222,6 @@ function PriorityTable() {
                   {process.PID}
                 </TableCell>
                 <TableCell align="center">
-                  {process.Priority}
                   <Box
                     component="form"
                     sx={{
@@ -189,19 +230,17 @@ function PriorityTable() {
                     noValidate
                     autoComplete="off"
                   >
-                    <div>
-                      <TextField
-                        id="priority"
-                        label="Priority"
-                        autoComplete="current-password"
-                        variant="standard"
-                        onChange={(e) => Priority(e)}
-                      />
-                    </div>
+                    <TextField
+                      id="priority"
+                      label="Priority"
+                      defaultValue={process.Priority}
+                      autoComplete="current-password"
+                      variant="standard"
+                      onChange={(e) => Priority(e, i)}
+                    />
                   </Box>
                 </TableCell>
                 <TableCell align="center">
-                  {process.Arrival_Time}
                   <Box
                     component="form"
                     sx={{
@@ -215,19 +254,20 @@ function PriorityTable() {
                         id="arrival_time"
                         label="Arrival Time"
                         autoComplete="current-password"
+                        defaultValue={process.Arrival_Time}
                         variant="standard"
-                        onChange={(e) => arrivalTime(e)}
+                        onChange={(e) => arrivalTime(e, i)}
                       />
                     </div>
                   </Box>
                 </TableCell>
                 <TableCell align="center">
-                  {process.Burst_Time}
                   <Box
                     component="form"
                     sx={{
                       "& .MuiTextField-root": { m: 1, width: "22ch" },
                     }}
+                    defaultValue={process.Burst_Time}
                     noValidate
                     autoComplete="off"
                   >
@@ -244,20 +284,19 @@ function PriorityTable() {
                   </Box>
                 </TableCell>
                 <TableCell align="center">{process.Completion_Time}</TableCell>
-                <TableCell align="center">{process.Turnaround_Time}</TableCell>
+                <TableCell align="center">{process.TurnAround_Time}</TableCell>
                 <TableCell align="center">{process.Waiting_Time}</TableCell>
                 <TableCell align="center">{process.Response_Time}</TableCell>
                 <TableCell align="center">
-                  <Button
-                    variant=" "
-                    style={{ backgroundColor: "#212121", color: "white" }}
+                  <IconButton
+                    variant="contained"
+                    color="error"
                     onClick={() => {
                       deleteProcess(process.PID);
                     }}
-                    startIcon={<DeleteIcon />}
                   >
-                    Delete
-                  </Button>
+                    <DeleteIcon />
+                  </IconButton>
                 </TableCell>
               </TableRow>
             ))}
@@ -279,8 +318,8 @@ function PriorityTable() {
         </Button>
         <Button
           variant="outlined"
-          onClick={() => {
-            Result();
+          onClick={(e) => {
+            Result(process);
           }}
         >
           Result
