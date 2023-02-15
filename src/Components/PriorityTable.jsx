@@ -17,7 +17,7 @@ import {
 import "./PriorityTable.css";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-function PriorityTable() {
+function PriorityTable(props) {
   const Processes = [createData("1", "", "", "", "", "", "", "")];
 
   function createData(
@@ -25,7 +25,7 @@ function PriorityTable() {
     Priority,
     Arrival_Time,
     Burst_Time,
-    Completion_Time ,
+    Completion_Time,
     TurnAround_Time,
     Waiting_Time,
     Response_Time
@@ -43,11 +43,19 @@ function PriorityTable() {
   }
 
   const [process, setProcess] = useState(Processes);
-
+  const [error, setError] = useState("");
+  const [error1, setError1] = useState("");
+  const [error2, setError2] = useState("");
+  // const regex = /^[+]?([1-9][0-9]*(?:[\.][0-9]*)?|0*\.0*[1-9][0-9]*)(?:[eE][+-][0-9]+)?$/
   //Add Process
-  const addProcess = () => {
+  const addProcess = (i) => {
     let pid = Math.floor(100 * Math.random());
-    setProcess([...process, createData(pid, "", "", "", "", "", "", "")]);
+  setProcess([...process, createData(pid, "", "", "", "", "", "", "")]);
+
+    const t = process;
+    console.log("hi");
+    
+    
   };
 
   //Delete Process
@@ -60,45 +68,110 @@ function PriorityTable() {
   };
 
   const Priority = (e, i) => {
-    const t = process;
-    t[i]["Priority"] = e.target.value;
-    setProcess(t);
+    const newValue = e.target.value;
+    if (!isNaN(newValue)) {
+      const t = process;
+      t[i]["Priority"] = newValue;
+      setProcess(t);
+      setError("");
+    } else {
+      setError("Please enter a valid number");
+    }
   };
+
   const arrivalTime = (e, i) => {
-    const t = process;
-    t[i]["Arrival_Time"] = e.target.value;
-    setProcess(t);
+    const newValue = e.target.value;
+    if (!isNaN(newValue)) {
+      const t = process;
+      t[i]["Arrival_Time"] = e.target.value;
+      setProcess(t);
+      setError1("");
+    } else {
+      setError1("Please enter a positive number");
+    }
   };
+
   const burstTime = (e, i) => {
-    const t = process;
-    t[i]["Burst_Time"] = e.target.value;
-    setProcess(t);
-    // console.log(t);
+    const newValue = e.target.value;
+    if (!isNaN(newValue)) {
+      const t = process;
+      t[i]["Burst_Time"] = e.target.value;
+      setProcess(t);
+      setError2("");
+    } else {
+      setError2("Please enter a positive number");
+    }
   };
 
   // const priorityPreemptive = require("../models/CPUScheduling");
 
+  function priorityScheduling(process) {
+    if (!process || !process.length) return [];
+    let currentTime = 0,
+      completed = 0;
+    let n = process.length;
+    if (n == 0) return [];
+    let isCompleted = Array(process.length).fill(0);
+    let prev = 0;
+    let burstRemaining = process.map((x) => x.Burst_Time);
+
+    while (completed !== n) {
+      let index = -1;
+      let max = Number.MAX_SAFE_INTEGER;
+      for (let i = 0; i < n; i++) {
+        if (process[i].Arrival_Time <= currentTime && isCompleted[i] === 0) {
+          if (process[i].Priority < max) {
+            max = process[i].Priority;
+            index = i;
+          }
+          if (process[i].Priority === max) {
+            if (process[i].Arrival_Time < process[index].Arrival_Time) {
+              max = process[i].Priority;
+              index = i;
+            }
+          }
+        }
+      }
+      if (index !== -1) {
+        if (burstRemaining[index] === process[index].Burst_Time) {
+          process[index].Response_Time =
+            currentTime - process[index].Arrival_Time;
+        }
+        burstRemaining[index] -= 1;
+        currentTime++;
+        prev = currentTime;
+        if (burstRemaining[index] === 0) {
+          process[index].Completion_Time = currentTime;
+          process[index].TurnAround_Time =
+            process[index].Completion_Time - process[index].Arrival_Time;
+          process[index].Waiting_Time =
+            process[index].TurnAround_Time - process[index].Burst_Time;
+          isCompleted[index] = 1;
+          completed++;
+        }
+      } else {
+        currentTime++;
+      }
+    }
+    return process;
+  }
+
   //Result
   const Result = async (process) => {
-
-      
-      // console.log(priorityScheduling(process));
-      // let data = process;
-      // const res = await axios.post("http://localhost:4000/schedule", {data : [...process]});
-      try{
-      const data = await axios.post("http://localhost:4000/schedule", {process : [...process]});
+    // console.log(priorityScheduling(process));
+    // let data = process;
+    // const res = await axios.post("http://localhost:4000/schedule", {data : [...process]});
+    try {
+      const data = await axios.post("http://localhost:4000/schedule", {
+        process: [...process],
+      });
       const myData = data.data.process;
       setProcess(myData);
       console.log(myData);
-    }catch(err){
-        console.log(err);
+    } catch (err) {
+      console.log(err);
     }
-
-
-  }
-
-
-
+  };
 
   return (
     <>
@@ -231,6 +304,7 @@ function PriorityTable() {
                     autoComplete="off"
                   >
                     <TextField
+                      required
                       id="priority"
                       label="Priority"
                       defaultValue={process.Priority}
@@ -238,6 +312,7 @@ function PriorityTable() {
                       variant="standard"
                       onChange={(e) => Priority(e, i)}
                     />
+                    {error && <div style={{ color: "red" }}>{error}</div>}
                   </Box>
                 </TableCell>
                 <TableCell align="center">
@@ -251,6 +326,7 @@ function PriorityTable() {
                   >
                     <div>
                       <TextField
+                         required
                         id="arrival_time"
                         label="Arrival Time"
                         autoComplete="current-password"
@@ -258,6 +334,7 @@ function PriorityTable() {
                         variant="standard"
                         onChange={(e) => arrivalTime(e, i)}
                       />
+                      {error1 && <div style={{ color: "red" }}>{error1}</div>}
                     </div>
                   </Box>
                 </TableCell>
@@ -273,6 +350,7 @@ function PriorityTable() {
                   >
                     <div>
                       <TextField
+                        required
                         className="bursttime"
                         id="burst_time"
                         label="Burst Time "
@@ -280,6 +358,7 @@ function PriorityTable() {
                         variant="standard"
                         onChange={(e) => burstTime(e, i)}
                       />
+                      {error2 && <div style={{ color: "red" }}>{error2}</div>}
                     </div>
                   </Box>
                 </TableCell>
@@ -312,7 +391,9 @@ function PriorityTable() {
           variant="contained"
           overflow="scroll"
           style={{ backgroundColor: "#212121" }}
-          onClick={addProcess}
+          onClick={() => {
+            addProcess();
+          }}
         >
           Add Process
         </Button>
