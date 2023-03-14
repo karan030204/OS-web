@@ -6,3 +6,7 @@ Table{
 *{
     font-family: "Raleway";
 }
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

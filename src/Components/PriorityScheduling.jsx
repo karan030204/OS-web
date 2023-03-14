@@ -17,7 +17,7 @@ import {
 import "./PriorityTable.css";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-function PriorityTable(props) {
+function PriorityScheduling(props) {
   const Processes = [createData("1", "", "", "", "", "", "", "")];
 
   function createData(
@@ -67,6 +67,7 @@ function PriorityTable(props) {
     setProcess(newProcess);
   };
 
+  //getting priority 
   const Priority = (e, i) => {
     const newValue = e.target.value;
     if (!isNaN(newValue)) {
@@ -105,56 +106,7 @@ function PriorityTable(props) {
 
   // const priorityPreemptive = require("../models/CPUScheduling");
 
-  function priorityScheduling(process) {
-    if (!process || !process.length) return [];
-    let currentTime = 0,
-      completed = 0;
-    let n = process.length;
-    if (n == 0) return [];
-    let isCompleted = Array(process.length).fill(0);
-    let prev = 0;
-    let burstRemaining = process.map((x) => x.Burst_Time);
 
-    while (completed !== n) {
-      let index = -1;
-      let max = Number.MAX_SAFE_INTEGER;
-      for (let i = 0; i < n; i++) {
-        if (process[i].Arrival_Time <= currentTime && isCompleted[i] === 0) {
-          if (process[i].Priority < max) {
-            max = process[i].Priority;
-            index = i;
-          }
-          if (process[i].Priority === max) {
-            if (process[i].Arrival_Time < process[index].Arrival_Time) {
-              max = process[i].Priority;
-              index = i;
-            }
-          }
-        }
-      }
-      if (index !== -1) {
-        if (burstRemaining[index] === process[index].Burst_Time) {
-          process[index].Response_Time =
-            currentTime - process[index].Arrival_Time;
-        }
-        burstRemaining[index] -= 1;
-        currentTime++;
-        prev = currentTime;
-        if (burstRemaining[index] === 0) {
-          process[index].Completion_Time = currentTime;
-          process[index].TurnAround_Time =
-            process[index].Completion_Time - process[index].Arrival_Time;
-          process[index].Waiting_Time =
-            process[index].TurnAround_Time - process[index].Burst_Time;
-          isCompleted[index] = 1;
-          completed++;
-        }
-      } else {
-        currentTime++;
-      }
-    }
-    return process;
-  }
 
   //Result
   const Result = async (process) => {
@@ -162,7 +114,7 @@ function PriorityTable(props) {
     // let data = process;
     // const res = await axios.post("http://localhost:4000/schedule", {data : [...process]});
     try {
-      const data = await axios.post("http://localhost:4000/schedule", {
+      const data = await axios.post("http://localhost:4000/PrioritySchedule", {
         process: [...process],
       });
       const myData = data.data.process;
@@ -289,7 +241,7 @@ function PriorityTable(props) {
             {process.map((process, i) => (
               <TableRow
                 key={process.PID}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                sx={{ "&:last-child td, &:last-child th": { border: 0, fontSize : "" } }}
               >
                 <TableCell component="th" scope="row">
                   {process.PID}
@@ -300,8 +252,6 @@ function PriorityTable(props) {
                     sx={{
                       "& .MuiTextField-root": { m: 1, width: "22ch" },
                     }}
-                    noValidate
-                    autoComplete="off"
                   >
                     <TextField
                       required
@@ -311,8 +261,10 @@ function PriorityTable(props) {
                       autoComplete="current-password"
                       variant="standard"
                       onChange={(e) => Priority(e, i)}
+                      error={error !== ''}
+                      helperText={error}
                     />
-                    {error && <div style={{ color: "red" }}>{error}</div>}
+                    
                   </Box>
                 </TableCell>
                 <TableCell align="center">
@@ -321,10 +273,7 @@ function PriorityTable(props) {
                     sx={{
                       "& .MuiTextField-root": { m: 1, width: "22ch" },
                     }}
-                    noValidate
-                    autoComplete="off"
                   >
-                    <div>
                       <TextField
                          required
                         id="arrival_time"
@@ -333,9 +282,9 @@ function PriorityTable(props) {
                         defaultValue={process.Arrival_Time}
                         variant="standard"
                         onChange={(e) => arrivalTime(e, i)}
+                        error={error1 !== ''}
+                        helperText={error1}
                       />
-                      {error1 && <div style={{ color: "red" }}>{error1}</div>}
-                    </div>
                   </Box>
                 </TableCell>
                 <TableCell align="center">
@@ -344,11 +293,8 @@ function PriorityTable(props) {
                     sx={{
                       "& .MuiTextField-root": { m: 1, width: "22ch" },
                     }}
-                    defaultValue={process.Burst_Time}
-                    noValidate
-                    autoComplete="off"
+                    
                   >
-                    <div>
                       <TextField
                         required
                         className="bursttime"
@@ -357,9 +303,9 @@ function PriorityTable(props) {
                         autoComplete="current-password"
                         variant="standard"
                         onChange={(e) => burstTime(e, i)}
+                        error={error2 !== ''}
+                        helperText={error2}
                       />
-                      {error2 && <div style={{ color: "red" }}>{error2}</div>}
-                    </div>
                   </Box>
                 </TableCell>
                 <TableCell align="center">{process.Completion_Time}</TableCell>
@@ -410,4 +356,4 @@ function PriorityTable(props) {
   );
 }
 
-export default PriorityTable;
+export default PriorityScheduling;
