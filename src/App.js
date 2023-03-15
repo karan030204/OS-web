@@ -13,7 +13,8 @@ function App() {
       {/* <FCFSScheduling/> */}
       {/* <PriorityScheduling/> */}
       {/* <PetersonAlgorithm/> */}
-      {/* <Try/> */}
+      <Try/>
+      {/* <Chart/> */}
       
     
     </div>
