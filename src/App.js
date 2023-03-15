@@ -18,6 +18,10 @@ function App() {
       <NavbarOfHome/>
       <PetersonAlgorithm/>
       <Footer/>
+      {/* <PetersonAlgorithm/> */}
+      <Try/>
+      {/* <Chart/> */}
+      
     
     </div>
   );
