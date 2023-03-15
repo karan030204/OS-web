@@ -1,7 +1,74 @@
-
-
+/* *{
+  overflow-x: hidden;
+} */
+.PetersonAlgorithm{
+  height: 1100px;
+}
 
 .ball{
 
   transition: transform 1s ease-in-out;
+}
+video{
+  position: relative;
+  left: 5%;
+}
+.simulator{
+  height: auto;
+  font-size: 17px;
+  position: relative;
+  left:50%;
+  top: -340px;
+  border: 3px solid purple;
+  border-radius: 10px;
+  padding: 20px;
+  width: 670px;
+}
+.PetersonAlgorithm button {
+  margin: 40px;
+  padding: 10px;
+  font-size: 15px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  background-color: rgb(93, 17, 163);
+  border: 0px solid yellow;
+  border-radius: 5px;
+  color: rgb(0, 254, 220);
+
+}
+.PetersonAlgorithm .intro{
+  border: 0px solid white;
+  position: relative;
+  display: inline-block;
+  width: 700px;
+  top: -130px;
+}
+strong{
+  font-size: 25px;
+}
+.PetersonAlgorithm h1{
+  padding: 30px;
+  font-weight: 700;
+  color: rgb(93, 17, 163);
+  font-size: 40px;
+  justify-content: center;
+  text-align: center;
+}
+.PetersonAlgorithm button:hover{
+  color: azure;
+  padding: 9px;
+}
+.PetersonAlgorithm video{
+  max-width: 600px;
+}
+.Try{
+  height: 1000px;
+}
+
+.PetersonAlgorithm li{
+  list-style: none;
+  max-width: 40%;
+  display: inline-block;
+  border: 0px solid white;
+  padding: 30px;
+  margin-left: 100px;
 }

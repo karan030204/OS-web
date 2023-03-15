@@ -1,0 +1,22 @@
+.Footer{
+    border: 1px solid rgb(175, 175, 175);
+    background-color:rgb(68, 19, 114);
+    z-index: 1;
+    padding-bottom: 50px;
+    padding-left: 50px;
+    padding-top: 20px;
+    font-size: 30px;
+    color: rgb(2, 184, 159);
+    
+}
+.footerheading{
+    font-weight: 2000;
+}
+.details{
+    position: relative;
+    left: 90%;
+    top: -30px;
+    color: white;
+    font-size: 20px;
+    font-weight: 100;
+}

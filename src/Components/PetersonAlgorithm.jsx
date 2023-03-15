@@ -1,161 +1,84 @@
-import { useState, useRef } from "react";
+import React from 'react'
+import "./Try.css";
+const PetersonAlgorithm = () => {
+  const [flags, setFlags] = React.useState([false, false]);
+  const [turn, setTurn] = React.useState(0);
+  const [criticalSection, setCriticalSection] = React.useState('');
 
-let count = 0;
-function PetersonAlgorithm() {
-  const [balls, setBalls] = useState([{ size: 50, text: "P1" }]);
-  const [showCritSection, setShowCritSection] = useState(true);
-  const [isMoving, setIsMoving] = useState(false);
-  const [isStartButtonClicked, setIsStartButtonClicked] = useState(false);
-  const ballRef = useRef(null);
-  const [moveTime, setMoveTime] = useState(null); // use a variable to hold the time to travel
-  const [moveDistance, setMoveDistance] = useState(0); // use a variable to hold the distance to move
-  const [turn, setTurn] = useState(0); // use a variable to represent whose turn it is
+  const process1 = 0;
+  const process2 = 1;
+  
+  const enterCriticalSection = (process) => {
+    // Set the flag of the current process to true
+    setFlags(flags => {
+      flags[process] = true; 
+      return flags;
+    });
 
-  const ballStyle = {
-    backgroundColor: "red",
-    position: "relative",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    color: "white",
-    fontWeight: "bold",
-  };
+    // Set the turn to the other process
+    setTurn(1 - process);
 
-  const ballContentStyle = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    zIndex: 1,
-  };
+    // Wait until the other process is finished or it's the current process's turn
+    while (flags[1 - process] && turn === 1 - process) {}
 
-  const criticalSectionStyle = {
-    padding: "3em",
-    position: "fixed",
-    top: "38%",
-    right: "42.8%",
-    transform: "translateY(-50%)",
-    backgroundColor: "black",
-    opacity: 0.8,
-    width: "200px",
-    height: "80px",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    color: "white",
-    fontWeight: "bold",
-    fontSize: "2rem",
-    zIndex: 2,
-  };
-  const handleAddBall = () => {
-    if(count == 1){
-      alert("You cannot add more than 2 balls it violates the peterson's Algorithm");}else{
-    count++;
-    if (!isStartButtonClicked) {
-      const newBall = {
-        size: 50,
-        text: `P${balls.length + 1}`,
-        position: { x: 0, y: balls.length * 60 }, // position the ball vertically
-      };
-      setBalls([...balls, newBall]);
-    }
-  }
-  };
+    // Enter the critical section
+    setCriticalSection(`Process ${process + 1} is in the critical section`);
 
-  const handleStartMoving = () => {
-    setIsStartButtonClicked(true);
-    setIsMoving(true);
-
-    const ballElement = ballRef.current;
-    if (!ballElement) {
-      return;
-    }
-
-    const ballRect = ballElement.getBoundingClientRect();
-    const critSectionElement = document.getElementById("crit-section");
-    if (!critSectionElement) {
-      return;
-    }
-
-    const critSectionRect = critSectionElement.getBoundingClientRect();
-
-    const distanceToCritSection = critSectionRect.left - ballRect.right;
-    const distanceToStop = distanceToCritSection - 10;
-
-    const timeToTravel = calculateTimeToTravel(distanceToStop); // calculate time based on distance
-    setMoveTime(timeToTravel); // set the time to travel in a separate variable
-    setMoveDistance(distanceToStop); // set the distance to move in a separate variable
-
-    // Acquire the lock
-    setTurn(1); // set the turn to P1
-    while (turn === 0 && isMoving) {
-      // wait for P2 to have a turn
-    }
-
-    moveBall(ballElement, distanceToStop, timeToTravel);
-
-    // Release the lock
-     setTurn(0); // set the turn to 0 (i.e., no one's turn)
-  };
-
-  const calculateTimeToTravel = (distanceToStop) => {
-    const pixelsPerSecond = 100; // set a constant
-    const timeToTravel = distanceToStop / pixelsPerSecond; // calculate time based on distance and speed
-    return timeToTravel; // return the time to travel
-  };
-
-  const moveBall = (ballElement, distanceToStop, timeToTravel) => {
-    const pixelsPerSecond = distanceToStop / timeToTravel; // calculate the speed (pixels per second)
-
-    let start = null;
-    let currentPosition = 0;
-
-    const step = (timestamp) => {
-      if (!start) start = timestamp;
-      const elapsed = timestamp - start;
-
-      currentPosition = (pixelsPerSecond * elapsed) / 1000; // calculate the new position of the ball
-
-      if (currentPosition < distanceToStop) {
-        window.requestAnimationFrame(step); // continue moving the ball
-      } else {
-        setIsMoving(false); // stop moving the ball
-      }
-
-      ballElement.style.transform = `translateX(${currentPosition}px)`; // move the ball to its new position
-    };
-
-    window.requestAnimationFrame(step); // start moving the ball
+    // Reset the flag of the current process to false
+    setFlags(flags => {
+      flags[process] = false;
+      return flags;
+    });
   };
 
   return (
-    <div>
-      <div style={{ display: "inline-block", justifyContent: "left" ,margin : "12em"}}>
-        {balls.map((ball, index) => (
-          <div
-            key={index}
-            style={{ ...ballStyle, width: ball.size, height: ball.size, borderRadius:ball.size/2 , position:"relative",marginLeft : "10em",marginBottom:"0"}}
-            ref={index === 0 ? ballRef : null}
-          >
-            <div style={ballContentStyle}>{ball.text}</div>
+    <div className='PetersonAlgorithm'>
+      <h1>PETERSON ALGORITHM</h1>
+      <hr />
+      <ul>
+        <li>
+          <video width="400" height="500" controls >
+          <source src="PetersonFinal.mp4" type="video/mp4"/>
+          </video>
+        </li>
+        <li>
+          <p className="intro">
+          <strong>INTRODUCTION</strong> <br />
+          Peterson's algorithm is used for mutual exclusion and allows two processes to share a single-use resource without conflict. It uses only shared memory for communication.
+
+          It ensures that if a process is in the critical section, no other process must be allowed to enter it. This property is termed mutual exclusion.
+
+          If more than one process wants to enter the critical section, the process that should enter the critical region first must be established. This is termed progress.
+          <br /> <br />
+          Let's consider the process 1 first raises a flag indicating a wish to enter the critical section. Then, turn is set to 2  to allow the other process. The process 2 enter the critical section. Finally, the while loop will only allow one process to enter its critical section.
+
+        <br /> The Process 1 lowers the flag[1] in the exit section allowing the process 2 to continue if it has been waiting. <br />
+        
+     </p>
+        </li>
+      </ul>
+      
+      <ul>
+        <li>
+        
+        Peterson's solution finds applications and examples of different problems in Operating Systems: <br />
+            <br />
+          1.The producer-consumer problem can be solved using Peterson's solution. <br /> <br />
+          2 .The logic used in a semaphore is similar to Peterson's solution. The semaphores are used to solve many problems in OS. <br /> <br />
+          3.The most suited example is the usage of Peterson's solution in the critical section problem. <br /> <br />
+        </li>
+      </ul>
+      <div className="simulator">
+          <p>This is a shared resource that can only be accessed by one process at a time. <br />
+            click any of the process it will get that process in work and the other process <br /> will be in busy waiting. <br />
+            Both the process have arrived at the same time. Choose one process So that <br />the other process can be send to busy waiting.</p>
+            <button onClick={() => enterCriticalSection(process1)}>Process 1</button>
+            <button onClick={() => enterCriticalSection(process2)}>Process 2</button>
+          <p>{criticalSection}</p>
           </div>
-        ))}
-        <br/>
-        <button onClick={handleAddBall}>Add Ball</button>
-      </div>
-      <div
-        style={{ display: "flex", justifyContent: "center", marginTop: "3em" }}
-      >
-        <button disabled={isStartButtonClicked} onClick={handleStartMoving}>
-          Start Moving
-        </button>
-      </div>
-      {showCritSection && (
-        <div style={criticalSectionStyle} id="crit-section">
-          Critical Section
-        </div>
-      )}
+      
     </div>
-  );
+  )
 }
-export default PetersonAlgorithm;
+
+export default PetersonAlgorithm

@@ -1,0 +1,25 @@
+.navbar li{
+    list-style: none;
+    max-width: 30%;
+    display: inline-block;
+    border: 1px solid white;
+    padding-left: 30px;
+    font-size: 20px;
+}
+.navbar a{
+    text-decoration: none;
+    color: black;
+
+}
+.navbar a:hover{
+    color:rgb(2, 184, 159) ;
+}
+.navbar{
+    position: relative;
+    left: 70%;
+    top: -70px;
+}
+.NavbarOfHome{
+    height: 120px;
+    overflow: hidden;
+}

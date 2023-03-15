@@ -9,7 +9,7 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Alert from '@mui/material/Alert';
 
-let BALL_DISTANCE = 165;
+let BALL_DISTANCE = 157;
 let BALL_COUNT = 1;
 let fcount = 0;
 let p1 = 0;
@@ -154,14 +154,43 @@ const Try = () => {
   }
   
   }
+  const [flags, setFlags] = useState([false, false]);
+  const [turn, setTurn] = useState(0);
+  const [criticalSection, setCriticalSection] = useState('');
+
+  const process1 = 0;
+  const process2 = 1;
+
+  const enterCriticalSection = (process) => {
+    // Set the flag of the current process to true
+    setFlags(flags => {
+      flags[process] = true;
+      return flags;
+    });
+
+    // Set the turn to the other process
+    setTurn(1 - process);
+
+    // Wait until the other process is finished or it's the current process's turn
+    while (flags[1 - process] && turn === 1 - process) {}
+
+    // Enter the critical section
+    setCriticalSection(`Process ${process + 1} is in the critical section`);
+
+    // Reset the flag of the current process to false
+    setFlags(flags => {
+      flags[process] = false;
+      return flags;
+    });
+  };
 
   return (
     <>
       <div
         style={{
-          position: "fixed",
-          bottom: "33%",
-          left: "36%",
+          position: "absolute",
+          top: "13%",
+          left: "30%",
           transform: "translateX(-50%)",
         }}
         className="flex items-center justify-center font-bold text-white text-4xl Critical-Section absolute m-10 bg-black w-56 h-64"
@@ -172,7 +201,7 @@ const Try = () => {
         style={{
           display: "inline-block",
           justifyContent: "left",
-          margin: "12em",
+          margin: "10em",
         }}
       >
         {balls.map((ball, index) => (
@@ -184,7 +213,7 @@ const Try = () => {
               }px)`,
               cursor: "pointer",
             }}
-            className={` ball flex items-center justify-center m-5 bg-blue-500 rounded-full  w-20 h-20  }`}
+            className={` ball flex items-center justify-center m-4 bg-blue-500 rounded-full  w-20 h-20  }`}
             onClick={() => handleClickProcess(index)}
           >
             <p className="text-black font-bold">{ball.text}</p>
@@ -193,9 +222,9 @@ const Try = () => {
       </div>
       <Stack
         style={{
-          position: "fixed",
-          bottom: "5%",
-          left: "25%",
+          position: "absolute",
+          top: "5%",
+          left: "15%",
           transform: "translateX(-50%)",
         }}
         direction="row"
@@ -207,9 +236,9 @@ const Try = () => {
       </Stack>
       <Stack
         style={{
-          position: "fixed",
-          bottom: "5%",
-          left: "35%",
+          position: "absolute",
+          top: "5%",
+          left: "25%",
           transform: "translateX(-50%)",
         }}
         direction="row"
@@ -229,8 +258,11 @@ const Try = () => {
         <DialogActions>
           <Button onClick={handleClose}>OK</Button>
         </DialogActions>
-      </Dialog>
+      </Dialog>      
+      
+    
     </>
+
   );
 };
 
