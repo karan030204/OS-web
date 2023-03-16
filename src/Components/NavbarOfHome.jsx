@@ -7,8 +7,8 @@ function NavbarOfHome() {
         <img src="OSlogo.png" alt="LOGO" />
         <ul className='navbar'>
             <li><a href="/">HOME</a></li>
-            <li><a href="/">ABOUT US</a></li>
-            <li><a href="/">PROJECTS</a></li>
+            <li><a href="/peterson">PETERSON</a></li>
+            <li><a href="/fcfs">FCFS</a></li>
             
         </ul>
     </div>

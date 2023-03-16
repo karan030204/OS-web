@@ -8,6 +8,8 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Alert from '@mui/material/Alert';
+import NavbarOfHome from "./NavbarOfHome";
+import Footer from "./Footer";
 
 let BALL_DISTANCE = 157;
 let BALL_COUNT = 1;
@@ -186,14 +188,16 @@ const Try = () => {
 
   return (
     <>
+    <NavbarOfHome/>
+    <h1 className="flex justify-center truncate text-3xl font-bold mt-10 ">Peterson's Algorithm Animation</h1>
       <div
         style={{
-          position: "absolute",
-          top: "13%",
-          left: "30%",
+          position: "relative",
+          top: "3em",
+          left: "35%",
           transform: "translateX(-50%)",
         }}
-        className="flex items-center justify-center font-bold text-white text-4xl Critical-Section absolute m-10 bg-black w-56 h-64"
+        className="flex items-center justify-center truncate font-bold text-white text-4xl Critical-Section relative  bg-indigo-800 w-56 h-64"
       >
         Critical <br /> Section
       </div>
@@ -202,49 +206,52 @@ const Try = () => {
           display: "inline-block",
           justifyContent: "left",
           margin: "10em",
+          top: "10em",
         }}
       >
         {balls.map((ball, index) => (
           <div
             key={index}
             style={{
+              position:"relative",
               transform: `translate(${ball.position.x + position}px, ${
                 ball.position.y
               }px)`,
               cursor: "pointer",
+              top:"-18em"
             }}
-            className={` ball flex items-center justify-center m-4 bg-blue-500 rounded-full  w-20 h-20  }`}
+            className={` ball flex items-center truncate justify-center m-4 bg-teal-500 rounded-full  w-20 h-20  }`}
             onClick={() => handleClickProcess(index)}
           >
-            <p className="text-black font-bold">{ball.text}</p>
+            <p className="text-white font-bold">{ball.text}</p>
           </div>
         ))}
       </div>
       <Stack
         style={{
           position: "absolute",
-          top: "5%",
-          left: "15%",
+          top: "93%",
+          left: "19%",
           transform: "translateX(-50%)",
         }}
         direction="row"
-        spacing={2}
+        spacing={3}
       >
-        <Button className="button" variant="outlined" onClick={handleAddBall}>
+        <Button className="button " variant="outlined" onClick={handleAddBall}>
           Add Process
         </Button>
       </Stack>
       <Stack
         style={{
           position: "absolute",
-          top: "5%",
-          left: "25%",
+          top: "93%",
+          left: "29%",
           transform: "translateX(-50%)",
         }}
         direction="row"
         spacing={2}
       >
-        <Button variant="contained" onClick={handleStartMoving}>
+        <Button variant="contained" className="" onClick={handleStartMoving}>
           Start Moving
         </Button>
       </Stack>
@@ -259,7 +266,7 @@ const Try = () => {
           <Button onClick={handleClose}>OK</Button>
         </DialogActions>
       </Dialog>      
-      
+      <Footer/>
     
     </>
 

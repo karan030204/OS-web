@@ -1,5 +1,10 @@
 import React from 'react'
+import Footer from './Footer';
+import NavbarOfHome from './NavbarOfHome';
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
 import "./Try.css";
+import { Link } from 'react-router-dom';
 const PetersonAlgorithm = () => {
   const [flags, setFlags] = React.useState([false, false]);
   const [turn, setTurn] = React.useState(0);
@@ -32,7 +37,9 @@ const PetersonAlgorithm = () => {
   };
 
   return (
-    <div className='PetersonAlgorithm'>
+    <>
+    <NavbarOfHome/>
+    <div className='PetersonAlgorithm '>
       <h1>PETERSON ALGORITHM</h1>
       <hr />
       <ul>
@@ -76,8 +83,16 @@ const PetersonAlgorithm = () => {
             <button onClick={() => enterCriticalSection(process2)}>Process 2</button>
           <p>{criticalSection}</p>
           </div>
+
       
     </div>
+    <Stack className='flex  justify-center mb-10 p-15 h-15'  spacing={2} direction="row">
+  
+      <Link to='/peterson'><Button className="bg-#FF0000  " variant='outlined'>Peterson Simulation</Button></Link>
+      
+    </Stack>
+    <Footer/>
+    </>
   )
 }
 

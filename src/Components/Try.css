@@ -3,11 +3,13 @@
 } */
 .PetersonAlgorithm{
   height: 1100px;
+  overflow: hidden;
 }
 
 .ball{
-
+  overflow: hidden;
   transition: transform 1s ease-in-out;
+  top: 10em;
 }
 video{
   position: relative;
@@ -61,7 +63,7 @@ strong{
   max-width: 600px;
 }
 .Try{
-  height: 1000px;
+  height: 10px;
 }
 
 .PetersonAlgorithm li{
