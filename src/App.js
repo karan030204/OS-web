@@ -8,6 +8,7 @@ import PriorityScheduling from './Components/PriorityScheduling';
 import Footer from './Components/Footer';
 import NavbarOfHome from './Components/NavbarOfHome';
 import { Routes,Route } from 'react-router-dom';
+import OptimalPageReplacement from './Components/OptimalPageReplacement';
 
 function App() {
   return (
@@ -23,8 +24,10 @@ function App() {
       {/* <Chart/> */}
       <Routes>
         <Route path="/" element={<PetersonAlgorithm />} />
+        <Route path="/priority" element={<PriorityScheduling />} />
         <Route path="/peterson" element={<Try />} />
         <Route path="/fcfs" element={<FCFSScheduling/>} />
+        <Route path="/opr" element={<OptimalPageReplacement/>} />
 
       </Routes>
     

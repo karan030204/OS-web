@@ -119,8 +119,10 @@ app.post("/PrioritySchedule", (req,res)=>{
 
 mongoose.connect(process.env.MONGO, (err) => {
     if(err) throw err;
-    app.listen(4000, (err)=>{
-        if(err) throw err;
-        console.log("App is listening on port 4000");
-    })
-})
+    
+  })
+  
+  app.listen(4000, (err)=>{
+      if(err) throw err;
+      console.log("App is listening on port 4000");
+  })

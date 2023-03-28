@@ -16,6 +16,7 @@ import {
 } from "@mui/material";
 import "./PriorityTable.css";
 import DeleteIcon from "@mui/icons-material/Delete";
+import NavbarOfHome from "./NavbarOfHome";
 
 function PriorityScheduling(props) {
   const Processes = [createData("1", "", "", "", "", "", "", "")];
@@ -75,7 +76,9 @@ function PriorityScheduling(props) {
       t[i]["Priority"] = newValue;
       setProcess(t);
       setError("");
-    } else {
+    }
+     else 
+     {
       setError("Please enter a valid number");
     }
   };
@@ -87,7 +90,9 @@ function PriorityScheduling(props) {
       t[i]["Arrival_Time"] = e.target.value;
       setProcess(t);
       setError1("");
-    } else {
+    } 
+    else 
+    {
       setError1("Please enter a positive number");
     }
   };
@@ -99,7 +104,9 @@ function PriorityScheduling(props) {
       t[i]["Burst_Time"] = e.target.value;
       setProcess(t);
       setError2("");
-    } else {
+    } 
+    else 
+    {
       setError2("Please enter a positive number");
     }
   };
@@ -127,6 +134,7 @@ function PriorityScheduling(props) {
 
   return (
     <>
+    <NavbarOfHome/> 
       <TableContainer
         component={Paper}
         sx={{ width: "100%", alignItems: "center", justifyContent: "center" }}

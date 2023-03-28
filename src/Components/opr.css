@@ -1,0 +1,106 @@
+.optimal{
+  text-align: center;
+  
+  
+ }
+.head{
+  font-size: 40px;
+  font-weight: bold;
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: center;
+  margin-bottom: 20px;
+  margin-top: 10px;
+}
+
+ .table {
+  
+   margin: 25px 0;
+   font-size: 0.9em;
+   font-family: sans-serif;
+   min-width: 400px;
+   box-shadow: 0 0 60px rgba(0, 0, 0, 0.15);
+   margin-left: auto;
+   margin-right: auto;
+   border-color: rgb(7, 7, 7);
+   border-width: 2px;
+
+   
+   
+ }
+ 
+ .table  tr {
+   background-color: #ebe7f4;
+   color: #010e0c;
+   text-align: left;
+   font-weight: bold;
+   
+ }
+ .table th{
+   background-color: rgb(133, 158, 212);
+   padding: 12px 15px;
+   text-align: center;
+ 
+ }
+ .table td {
+     padding: 12px 15px;
+     text-align: center;
+     
+ }
+ 
+ .table tr:nth-of-type(even) {
+   background-color: #f3f3f3;
+ }
+ 
+ .table  tr:last-of-type {
+   border-bottom: 2px solid #0c0d0d;
+   
+ }
+ #myTable tr:hover {
+  background-color: rgb(203, 218, 225);
+}
+ 
+ .btn {
+   background-color: #ddd;
+   border: rgb(20, 190, 247);
+   color: black;
+   padding: 10px 10px;
+   text-align: center;
+   margin: 2spx 2px;
+   transition: 0.3s;
+   display: inline-block;
+   text-decoration: none;
+   display: inline-block;
+   font-size: 15px;
+   font-family: Arial, Helvetica, sans-serif;
+   cursor: pointer;
+   border-radius: 5px;
+   margin-top: 10px;
+   margin-left: 10px;
+ }
+ 
+ .btn:hover {
+   background-color: rgb(128, 137, 145);
+   color: white;
+ }
+ input{
+   font-weight: bold;
+   border-radius: 3px;
+   padding: 8px;  
+   margin: 5px 15px;
+ }
+
+
+ .label2,.label1{
+   font-weight: bold;
+   font-size: 19px;
+ }
+
+ .faults {
+  font-size: 18px;
+  font-weight: bold;
+  margin-right: 10px;
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+  margin-top: 20px;
+  /* padding-bottom: 500px; */
+}

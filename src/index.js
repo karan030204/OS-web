@@ -6,6 +6,8 @@ import PetersonAlgorithm from './Components/PetersonAlgorithm';
 import {createBrowserRouter, RouterProvider} from "react-router-dom"
 import Try from './Components/Try';
 import FCFSScheduling from './Components/FCFSScheduling';
+import OptimalPageReplacement from './Components/OptimalPageReplacement';
+import PriorityScheduling from './Components/PriorityScheduling';
 
 
 const router = createBrowserRouter([
@@ -19,6 +21,13 @@ const router = createBrowserRouter([
   {
     path: "/fcfs",
     element: <FCFSScheduling />,
+  },
+  {
+    path: "/opr",
+    element: <OptimalPageReplacement />,
+  },  {
+    path: "/priority",
+    element: <PriorityScheduling />,
   },])
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
