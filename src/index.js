@@ -10,6 +10,7 @@ import OptimalPageReplacement from './Components/OptimalPageReplacement';
 import PriorityScheduling from './Components/PriorityScheduling';
 
 
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -28,7 +29,7 @@ const router = createBrowserRouter([
   },  {
     path: "/priority",
     element: <PriorityScheduling />,
-  },])
+  }])
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

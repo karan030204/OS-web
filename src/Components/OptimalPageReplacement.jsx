@@ -1,7 +1,13 @@
 import React, { useState } from "react";
 import './opr.css';
+import { Pie } from 'react-chartjs-2';
+import {ArcElement,Chart} from 'chart.js';
 
-function OptimalPage() {
+
+Chart.register(ArcElement)
+
+
+function OptimalPageReplacement()  {
   const [pageReferences, setPageReferences] = useState([]);
   const [frames, setFrames] = useState(0);
   const [pageFaults, setPageFaults] = useState(0);
@@ -12,6 +18,7 @@ function OptimalPage() {
   const [pageFaultParagraph, setPageFaultParagraph] = useState(false)
   const [hitParagraph, setHitParagraph] = useState(false)
   const [, sethitMissStaus] = useState(0);
+
 
   const handlePageReferencesChange = (event) => {
     const references = event.target.value
@@ -30,8 +37,21 @@ function OptimalPage() {
     setFrames(frames);
     setMemoryState(Array(frames).fill(null));
   };
+  const chartData = {
+    labels: ['Hits', 'Misses'],
+    datasets: [
+      {
+        data: 
+        [hits, pageFaults],
+        backgroundColor: ['#218a2c', '#eb3636'],
+        hoverBackgroundColor: ['#218a2c', '#eb3636'],
+      },
+    ],
+  };
 
   const simulateOptimalPageReplacement = () => {
+   
+
     let newTableData = [];
     let pageFaults = 0;
     let hits = 0;
@@ -81,13 +101,15 @@ function OptimalPage() {
     setHitParagraph(true)
     sethitMissStaus(true)
   };
+  const hitRatio = ((hits / pageReferences.length).toFixed(2))*100;
+  const missRatio = ((pageFaults / pageReferences.length).toFixed(2))*100;
  
 
 return (
   <div className="optimal">
     <div>
-      <h1 className="head">Optimal Page Replacement</h1>
-      <label className="label1" htmlFor="pageReferences">Page Reference String:</label>
+      <h1 className="head">   OPTIMAL PAGE REPLACEMENT</h1>
+      <label className="label1" htmlFor="pageReferences"> <br /> Page Reference String:</label>
       <input type="text" id="pageReferences" value={pageReferences} onChange={handlePageReferencesChange} />
     </div>
     <br />
@@ -132,9 +154,14 @@ return (
     
     {pageFaultParagraph && <p className="faults">Page Faults: {pageFaults}</p>}
     {hitParagraph && <p className="faults">Hits: {hits}</p>}
-    {pageFaultParagraph && <button className="btn" onClick={refreshPage}>Restart</button>}
+  {pageFaultParagraph &&<p >Hit ratio {hitRatio} %</p>}
+  {pageFaultParagraph &&<p >Miss ratio {missRatio} %</p>}
+   
+    <div className="chart-container"><Pie data={chartData} /></div>
+    {pageFaultParagraph && <button className="btn" onClick={refreshPage}>Restart </button>}
+    
   </div>
 );
 }
 
-export default OptimalPage;
+export default OptimalPageReplacement;

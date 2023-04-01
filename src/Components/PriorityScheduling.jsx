@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+
 import {
   Table,
   TableHead,
@@ -43,20 +44,22 @@ function PriorityScheduling(props) {
     };
   }
 
+  const colors = {};
+  let count = 0;
   const [process, setProcess] = useState(Processes);
   const [error, setError] = useState("");
   const [error1, setError1] = useState("");
   const [error2, setError2] = useState("");
+  const [gantArray, setgantArray] = useState([]);
+  const [isResultClicked, setIsResultClicked] = useState(false);
+
   // const regex = /^[+]?([1-9][0-9]*(?:[\.][0-9]*)?|0*\.0*[1-9][0-9]*)(?:[eE][+-][0-9]+)?$/
   //Add Process
   const addProcess = (i) => {
     let pid = Math.floor(100 * Math.random());
-  setProcess([...process, createData(pid, "", "", "", "", "", "", "")]);
+    setProcess([...process, createData(pid, "", "", "", "", "", "", "")]);
 
     const t = process;
-    console.log("hi");
-    
-    
   };
 
   //Delete Process
@@ -68,7 +71,7 @@ function PriorityScheduling(props) {
     setProcess(newProcess);
   };
 
-  //getting priority 
+  //getting priority
   const Priority = (e, i) => {
     const newValue = e.target.value;
     if (!isNaN(newValue)) {
@@ -76,9 +79,7 @@ function PriorityScheduling(props) {
       t[i]["Priority"] = newValue;
       setProcess(t);
       setError("");
-    }
-     else 
-     {
+    } else {
       setError("Please enter a valid number");
     }
   };
@@ -90,9 +91,7 @@ function PriorityScheduling(props) {
       t[i]["Arrival_Time"] = e.target.value;
       setProcess(t);
       setError1("");
-    } 
-    else 
-    {
+    } else {
       setError1("Please enter a positive number");
     }
   };
@@ -104,19 +103,41 @@ function PriorityScheduling(props) {
       t[i]["Burst_Time"] = e.target.value;
       setProcess(t);
       setError2("");
-    } 
-    else 
-    {
+    } else {
       setError2("Please enter a positive number");
     }
   };
 
-  // const priorityPreemptive = require("../models/CPUScheduling");
 
+  const getColor = (data) => {
+    let flag = 0;
+    if (colors[data]) {
+      return colors[data];
+    } else {
+      const randomColor =
+        "#" + Math.floor(Math.random() * 16777215).toString(16); //generate a random color
+      if (randomColor === "#FFFFFF") {
+        getColor(data);
+      } else {
+        for (let i = 0; i < colors.length; i++) {
+          if (randomColor === colors[i]) {
+            flag = 1;
+          } else {
+            flag = 0;
+          }
+        }
+        if (flag === 0) {
+          return (colors[data] = `${randomColor}`);
+        }
+      }
+    }
+  };
+  // const priorityPreemptive = require("../models/CPUScheduling");
 
 
   //Result
   const Result = async (process) => {
+    setIsResultClicked(true);
     // console.log(priorityScheduling(process));
     // let data = process;
     // const res = await axios.post("http://localhost:4000/schedule", {data : [...process]});
@@ -124,17 +145,23 @@ function PriorityScheduling(props) {
       const data = await axios.post("http://localhost:4000/PrioritySchedule", {
         process: [...process],
       });
+
       const myData = data.data.process;
+      const ganttChar = data.data.ganttChart;
+      console.log({ ganttChar });
       setProcess(myData);
-      console.log(myData);
+      // console.log(myData);
+      setgantArray(ganttChar);
     } catch (err) {
       console.log(err);
     }
   };
 
+  
+
   return (
     <>
-    <NavbarOfHome/> 
+      <NavbarOfHome />
       <TableContainer
         component={Paper}
         sx={{ width: "100%", alignItems: "center", justifyContent: "center" }}
@@ -249,7 +276,12 @@ function PriorityScheduling(props) {
             {process.map((process, i) => (
               <TableRow
                 key={process.PID}
-                sx={{ "&:last-child td, &:last-child th": { border: 0, fontSize : "" } }}
+                sx={{
+                  "&:last-child td, &:last-child th": {
+                    border: 0,
+                    fontSize: "",
+                  },
+                }}
               >
                 <TableCell component="th" scope="row">
                   {process.PID}
@@ -269,10 +301,9 @@ function PriorityScheduling(props) {
                       autoComplete="current-password"
                       variant="standard"
                       onChange={(e) => Priority(e, i)}
-                      error={error !== ''}
+                      error={error !== ""}
                       helperText={error}
                     />
-                    
                   </Box>
                 </TableCell>
                 <TableCell align="center">
@@ -282,17 +313,17 @@ function PriorityScheduling(props) {
                       "& .MuiTextField-root": { m: 1, width: "22ch" },
                     }}
                   >
-                      <TextField
-                         required
-                        id="arrival_time"
-                        label="Arrival Time"
-                        autoComplete="current-password"
-                        defaultValue={process.Arrival_Time}
-                        variant="standard"
-                        onChange={(e) => arrivalTime(e, i)}
-                        error={error1 !== ''}
-                        helperText={error1}
-                      />
+                    <TextField
+                      required
+                      id="arrival_time"
+                      label="Arrival Time"
+                      autoComplete="current-password"
+                      defaultValue={process.Arrival_Time}
+                      variant="standard"
+                      onChange={(e) => arrivalTime(e, i)}
+                      error={error1 !== ""}
+                      helperText={error1}
+                    />
                   </Box>
                 </TableCell>
                 <TableCell align="center">
@@ -301,19 +332,18 @@ function PriorityScheduling(props) {
                     sx={{
                       "& .MuiTextField-root": { m: 1, width: "22ch" },
                     }}
-                    
                   >
-                      <TextField
-                        required
-                        className="bursttime"
-                        id="burst_time"
-                        label="Burst Time "
-                        autoComplete="current-password"
-                        variant="standard"
-                        onChange={(e) => burstTime(e, i)}
-                        error={error2 !== ''}
-                        helperText={error2}
-                      />
+                    <TextField
+                      required
+                      className="bursttime"
+                      id="burst_time"
+                      label="Burst Time "
+                      autoComplete="current-password"
+                      variant="standard"
+                      onChange={(e) => burstTime(e, i)}
+                      error={error2 !== ""}
+                      helperText={error2}
+                    />
                   </Box>
                 </TableCell>
                 <TableCell align="center">{process.Completion_Time}</TableCell>
@@ -339,7 +369,7 @@ function PriorityScheduling(props) {
       <Stack
         spacing={2}
         direction="row"
-        style={{ justifyContent: "center", padding: "10em" }}
+        style={{ justifyContent: "center", padding: "3em", paddingTop: "7em" }}
       >
         <Button
           variant="contained"
@@ -360,6 +390,35 @@ function PriorityScheduling(props) {
           Result
         </Button>
       </Stack>
+      {/* To make the data horizontal we have added the flex flex-row and flex-groww to cover the remaining horizontal spaces */}
+      <div className="ganttChart flex flex-row justify-center items-center ">
+        {gantArray.map((data, index) => (
+          <>
+            <Box
+              component="span"
+              sx={{
+                position: "relative",
+                p: 3,
+                border: "1px solid grey",
+                backgroundColor: `${getColor(data)}`,
+              }}
+            >
+              <h2 className="text-white text-2xl ">P{data}</h2>
+              <span
+                style={{
+                  position: "absolute",
+                  bottom: "-20px",
+                  left: "-8px",
+                  fontSize: "1em",
+                }}
+              >
+                {count++}
+              </span>
+            </Box>
+          </>
+        ))}
+        <div className="mt-24">{isResultClicked && count++}</div>
+      </div>
     </>
   );
 }

@@ -1,18 +1,20 @@
 .optimal{
   text-align: center;
-  
+ 
   
  }
-.head{
+
+.optimal .head{
   font-size: 40px;
   font-weight: bold;
   font-family: Arial, Helvetica, sans-serif;
   text-align: center;
   margin-bottom: 20px;
   margin-top: 10px;
+  color: rgb(91, 28, 150);
 }
 
- .table {
+.optimal  .table {
   
    margin: 25px 0;
    font-size: 0.9em;
@@ -28,39 +30,39 @@
    
  }
  
- .table  tr {
+.optimal  .table  tr {
    background-color: #ebe7f4;
    color: #010e0c;
    text-align: left;
    font-weight: bold;
    
  }
- .table th{
-   background-color: rgb(133, 158, 212);
+ .optimal .table th{
+   background-color: rgb(168, 94, 205);
    padding: 12px 15px;
    text-align: center;
  
  }
- .table td {
+ .optimal .table td {
      padding: 12px 15px;
      text-align: center;
      
  }
  
- .table tr:nth-of-type(even) {
+ .optimal .table tr:nth-of-type(even) {
    background-color: #f3f3f3;
  }
  
- .table  tr:last-of-type {
+ .optimal .table  tr:last-of-type {
    border-bottom: 2px solid #0c0d0d;
    
  }
- #myTable tr:hover {
+ .optimal #myTable tr:hover {
   background-color: rgb(203, 218, 225);
 }
  
- .btn {
-   background-color: #ddd;
+ .optimal .btn {
+   background-color: #fff;
    border: rgb(20, 190, 247);
    color: black;
    padding: 10px 10px;
@@ -78,11 +80,11 @@
    margin-left: 10px;
  }
  
- .btn:hover {
-   background-color: rgb(128, 137, 145);
+ .optimal .btn:hover {
+  background-image: linear-gradient( blueviolet,purple);
    color: white;
  }
- input{
+ .optimal input{
    font-weight: bold;
    border-radius: 3px;
    padding: 8px;  
@@ -90,17 +92,31 @@
  }
 
 
- .label2,.label1{
+ .optimal .label2,.label1{
    font-weight: bold;
    font-size: 19px;
  }
 
- .faults {
+ .optimal .faults {
   font-size: 18px;
   font-weight: bold;
   margin-right: 10px;
   text-align: center;
   font-family: Arial, Helvetica, sans-serif;
   margin-top: 20px;
-  /* padding-bottom: 500px; */
-}
+  /* padding-bottom: 500px; */}
+  .optimal .chart-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 20vh;
+  }
+  .optimal{
+      border: 0px solid yellow;
+        background-color:antiquewhite;
+        margin-left:30px ;
+        margin-right: 30px;
+        top: -5px;
+        border-radius: 10px;
+        margin-bottom: 30px;
+    }
