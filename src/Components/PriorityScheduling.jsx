@@ -174,7 +174,7 @@ function PriorityScheduling(props) {
           marginTop:"130px"
         }}
         >
-          <h1 className="text-gray-200 flex justify-center items-center mb-5 ">Priority Preemptive Scheduling Algorithm</h1>
+          <h1 className="text-gray-200 flex justify-center items-center mb-5">Priority Preemptive Scheduling Algorithm</h1>
         <Table sx={{ minWidth: 80 }} aria-label="simple table">
           {/* Header */}
           <TableHead>

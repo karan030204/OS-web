@@ -30,7 +30,7 @@ function Projects() {
               imgPath={chatify}
               isBlog={false}
               title="Priority Preemptive Scheduling"
-              description="Personal Chat Room or Workspace to share resources and hangout with friends build with react.js, Material-UI, and Firebase. Have features which allows user for realtime messaging, image sharing as well as supports reactions on messages."
+              description="Priority preemptive scheduling assigns priority levels to processes and executes the highest priority process first. It interrupts lower-priority processes to allocate the CPU to higher-priority processes, ensuring that high-priority processes receive more CPU time. However, this can cause starvation for low-priority processes."
               ghLink="https://github.com/soumyajit4419/Chatify"
               demoLink="/priority"
             />
@@ -41,7 +41,7 @@ function Projects() {
               imgPath={bitsOfCode}
               isBlog={false}
               title="Peterson Algorithm"
-              description="My personal blog page build with Next.js and Tailwind Css which takes the content from makdown files and renders it using Next.js. Supports dark mode and easy to write blogs using markdown."
+              description="Peterson's solution is a software-based algorithm that uses two variables to ensure mutual exclusion, allowing only one process or thread to access a critical section at a time. However, it can lead to deadlock and may require more advanced synchronization techniques."
               ghLink="https://github.com/soumyajit4419/Bits-0f-C0de"
               demoLink="/peterson"
             />
@@ -52,7 +52,7 @@ function Projects() {
               imgPath={editor}
               isBlog={false}
               title="First Come First Serve Disk Scheduling Algorithm"
-              description="Online code and markdown editor build with react.js. Online Editor which supports html, css, and js code with instant view of website. Online markdown editor for building README file which supports GFM, Custom Html tags with toolbar and instant preview.Both the editor supports auto save of work using Local Storage"
+              description="The FCFS disk scheduling algorithm services disk requests in the order they arrive, with the first request being served first. While simple, it can lead to longer wait times and poor performance in high workload systems. More advanced algorithms may be more appropriate."
               ghLink="https://github.com/soumyajit4419/Editor.io"
               demoLink="/fcfs"              
             />
@@ -63,7 +63,7 @@ function Projects() {
               imgPath={leaf}
               isBlog={false}
               title="Optimal Page Replacement Algorithm"
-              description="Used the plant disease dataset from Kaggle and trained a image classifer model using 'PyTorch' framework using CNN and Transfer Learning with 38 classes of various plant leaves. The model was successfully able to detect diseased and healthy leaves of 14 unique plants. I was able to achieve an accuracy of 98% by using Resnet34 pretrained model."
+              description="The Optimal Page Replacement Algorithm aims to minimize page faults by selecting the page not used for the longest time in the future. While it provides the minimum possible number of page faults, it is not practical due to the need to predict future memory references. Other commonly used algorithms include LRU and FIFO."
               ghLink="https://github.com/soumyajit4419/Plant_AI"
               demoLink="/opr"
             />
