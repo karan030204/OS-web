@@ -8,13 +8,17 @@ import Try from './Components/Try';
 import FCFSScheduling from './Components/FCFSScheduling';
 import OptimalPageReplacement from './Components/OptimalPageReplacement';
 import PriorityScheduling from './Components/PriorityScheduling';
+import Home from './Components/Home/Home';
+import Projects from './Components/Projects/Projects';
+import About from './Components/About/About';
 
 
 
 const router = createBrowserRouter([
+  
   {
     path: "/",
-    element: <PetersonAlgorithm />,
+    element: <Home />,
   }, {
     path: "/peterson",
     element: <Try />,
@@ -29,7 +33,17 @@ const router = createBrowserRouter([
   },  {
     path: "/priority",
     element: <PriorityScheduling />,
-  }])
+  },
+  {
+    path: "/project",
+    element: <Projects />,
+  },
+  {
+    path: "/about",
+    element: <About />,
+  },
+
+])
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

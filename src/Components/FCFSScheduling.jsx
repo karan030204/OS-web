@@ -15,6 +15,8 @@ import { FoodBankTwoTone, QueryBuilder } from "@mui/icons-material";
 import Chart from "./Chart";
 import NavbarOfHome from "./NavbarOfHome";
 import Footer from "./Footer";
+import NewNavbar from "./NewNavbar";
+import Particle from "./Particle";
 
 let i = 0;
 let sum = 0;
@@ -97,12 +99,13 @@ const FCFSScheduling = () => {
   return (
     <>
       {/* NAVBAR */}
-      <NavbarOfHome />
-      <h1 className="flex justify-center text-4xl font-bold mt-10">
+      <NewNavbar/>
+      <Particle/>
+      <h1 className="relative flex justify-center text-4xl font-bold mt-10">
         FCFS Disk Scheduling Algorithm
       </h1>
       <div className="flex">
-        <div className="fcfs relative m-5 p-24 mt-20 mb-20 rounded-lg  h-auto w-2/4 bg-gray-400 shadow-2xl">
+        <div className="fcfs relative m-5 p-24 mt-20 mb-20 rounded-lg  h-auto w-2/4 bg-transparent shadow-2xl">
           <Box
             component="form"
             sx={{
@@ -121,6 +124,12 @@ const FCFSScheduling = () => {
               onChange={(e) => {
                 handleDataField(e);
               }}
+              InputProps={{
+                style: { color: "white" },
+              }}
+              InputLabelProps={{
+                style: { color: "white" },
+              }}
             />
 
             {/* Curr Position Field */}
@@ -133,23 +142,29 @@ const FCFSScheduling = () => {
                 handlePositionField(e);
               }}
               disabled={isDisabled}
+              InputProps={{
+                style: { color: "white" },
+              }}
+              InputLabelProps={{
+                style: { color: "white" },
+              }}
             />
 
             {/* Add Button */}
             <Stack direction="row" spacing={2}>
-              <Button onClick={AddData} variant="outlined">
+              <Button onClick={AddData} variant="outlined" style={{bg:"transparent", color:"white"}}>
                 Add
               </Button>
             </Stack>
 
             <Stack direction="row" spacing={2}>
-              <Button variant="contained" onClick={handleChart}>
+              <Button variant="contained" onClick={handleChart} style={{backgroundColor:"transparent",border:"1px solid white"}}>
                 Create Chart
               </Button>
             </Stack>
           </Box>
-          <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 200 }} aria-label="customized table">
+          <TableContainer component={Paper} style={{backgroundColor : "transparent", color:"white"}}>
+            <Table sx={{ minWidth: 200 }} aria-label="customized table" style={{backgroundColor : "transparent"}}>
               <TableHead>
                 <TableRow>
                   <StyledTableCell align="center">
@@ -163,8 +178,8 @@ const FCFSScheduling = () => {
               <TableBody>
                 {Queue.map((row, index) => (
                   <StyledTableRow key={row.name}>
-                    <StyledTableCell align="center">{row.data}</StyledTableCell>
-                    <StyledTableCell align="center">
+                    <StyledTableCell align="center" style={{color : "white"}}>{row.data}</StyledTableCell>
+                    <StyledTableCell align="center" style={{color : "white"}}>
                       {row.distance}
                     </StyledTableCell>
                   </StyledTableRow>
@@ -172,14 +187,13 @@ const FCFSScheduling = () => {
               </TableBody>
             </Table>
           </TableContainer>
-          <div className="seek-time flex mb-20 text-2xl font-bold">
+          <div className="seek-time flex mb-20 text-2xl font-bold text-white"  >
             Total Seek Time is : {sum}
           </div>
         </div>
         {showChart && <Chart />}
       </div>
 
-      <Footer />
     </>
   );
 };

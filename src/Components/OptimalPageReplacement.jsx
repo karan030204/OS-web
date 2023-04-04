@@ -1,24 +1,22 @@
 import React, { useState } from "react";
-import './opr.css';
-import { Pie } from 'react-chartjs-2';
-import {ArcElement,Chart} from 'chart.js';
+import { Pie } from "react-chartjs-2";
+import { ArcElement, Chart } from "chart.js";
+import "./opr.css";
+import Particle from "./Particle";
+import Footer from "./Footer";
+Chart.register(ArcElement);
 
-
-Chart.register(ArcElement)
-
-
-function OptimalPageReplacement()  {
+function OptimalPageReplacement() {
   const [pageReferences, setPageReferences] = useState([]);
   const [frames, setFrames] = useState(0);
   const [pageFaults, setPageFaults] = useState(0);
   const [hits, setHits] = useState(0);
   const [memoryState, setMemoryState] = useState([]);
   const [tableData, setTableData] = useState([]);
-  const [tableHeading, setTableHeading] = useState(false)
-  const [pageFaultParagraph, setPageFaultParagraph] = useState(false)
-  const [hitParagraph, setHitParagraph] = useState(false)
+  const [tableHeading, setTableHeading] = useState(false);
+  const [pageFaultParagraph, setPageFaultParagraph] = useState(false);
+  const [hitParagraph, setHitParagraph] = useState(false);
   const [, sethitMissStaus] = useState(0);
-
 
   const handlePageReferencesChange = (event) => {
     const references = event.target.value
@@ -28,43 +26,40 @@ function OptimalPageReplacement()  {
     setPageReferences(references);
   };
 
-  const refreshPage = ()=>{
+  const refreshPage = () => {
     window.location.reload();
-  }
-  
+  };
+
   const handleFramesChange = (event) => {
     const frames = parseInt(event.target.value);
     setFrames(frames);
     setMemoryState(Array(frames).fill(null));
   };
   const chartData = {
-    labels: ['Hits', 'Misses'],
+    labels: ["Hits", "Misses"],
     datasets: [
       {
-        data: 
-        [hits, pageFaults],
-        backgroundColor: ['#218a2c', '#eb3636'],
-        hoverBackgroundColor: ['#218a2c', '#eb3636'],
+        data: [hits, pageFaults],
+        backgroundColor: ["#218a2c", "#eb3636"],
+        hoverBackgroundColor: ["#218a2c", "#eb3636"],
       },
     ],
   };
 
   const simulateOptimalPageReplacement = () => {
-   
-
     let newTableData = [];
     let pageFaults = 0;
     let hits = 0;
-    let hitMissStatus= [] 
+    let hitMissStatus = [];
     let memoryState = Array(frames).fill(null);
 
     for (let i = 0; i < pageReferences.length; i++) {
       const page = pageReferences[i];
       if (!memoryState.includes(page)) {
         pageFaults++;
-          hitMissStatus.push({ 
-          Status: "Miss"
-      }); 
+        hitMissStatus.push({
+          Status: "Miss",
+        });
         if (memoryState.includes(null)) {
           const index = memoryState.indexOf(null);
           memoryState[index] = page;
@@ -79,9 +74,9 @@ function OptimalPageReplacement()  {
         }
       } else {
         hits++;
-        hitMissStatus.push({ 
-                Status: "Hit"
-      }); 
+        hitMissStatus.push({
+          Status: "Hit",
+        });
       }
       newTableData.push({
         page: page,
@@ -89,79 +84,157 @@ function OptimalPageReplacement()  {
         hits: hits,
         memory: [...memoryState],
         newFrame: memoryState.indexOf(page),
-        hitMissStatus: hitMissStatus[i]
+        hitMissStatus: hitMissStatus[i],
       });
     }
     setPageFaults(pageFaults);
     setHits(hits);
     setMemoryState(memoryState);
     setTableData(newTableData);
-    setTableHeading(true)
-    setPageFaultParagraph(true)
-    setHitParagraph(true)
-    sethitMissStaus(true)
+    setTableHeading(true);
+    setPageFaultParagraph(true);
+    setHitParagraph(true);
+    sethitMissStaus(true);
   };
-  const hitRatio = ((hits / pageReferences.length).toFixed(2))*100;
-  const missRatio = ((pageFaults / pageReferences.length).toFixed(2))*100;
- 
+  const hitRatio = (hits / pageReferences.length).toFixed(2) * 100;
+  const missRatio = (pageFaults / pageReferences.length).toFixed(2) * 100;
 
-return (
-  <div className="optimal">
-    <div>
-      <h1 className="head">   OPTIMAL PAGE REPLACEMENT</h1>
-      <label className="label1" htmlFor="pageReferences"> <br /> Page Reference String:</label>
-      <input type="text" id="pageReferences" value={pageReferences} onChange={handlePageReferencesChange} />
-    </div>
-    <br />
-    <div>
-      <label className="label2" htmlFor="frames">Number of Frames:</label>
-      <input type="number" id="frames" min="1" defaultValue={1} onChange={handleFramesChange} />
-    </div>
-    <br />
-    <button className="btn" id="button" onClick={simulateOptimalPageReplacement}>Simulate</button>
+  return (
+  
+  <>
+    <div className="optimal  m-4 rounded-lg ">
+      <h1 className="head flex justify-center items-center text-white ">
+        {" "}
+        OPTIMAL PAGE REPLACEMENT
+      </h1>
+      <div className="flex flex-column  m-3">
+        <div className="flex  p-2 ">
+          <label
+            className=" p-2 font-bold text-2xl text-white "
+            htmlFor="pageReferences"
+          >
+            {" "}
+            Page Reference String:
+          </label>
+          <input
+            type="text"
+            className=" p-2 w-56 rounded-sm text-black font-bold"
+            id="pageReferences"
+            value={pageReferences}
+            onChange={handlePageReferencesChange}
+          />
+        </div>
+        <br />
+        <div className="flex  p-2 ">
+          <label
+            className=" p-2 font-bold text-2xl text-white "
+            htmlFor="frames"
+          >
+            Number of Frames:
+          </label>
+          <input
+            type="number"
+            className="  w-56 rounded-sm text-black font-bold"
+            id="frames"
+            min="1"
+            defaultValue={1}
+            onChange={handleFramesChange}
+          />
+        </div>
+        <button
+          className="flex mx-auto border-2 text-white  py-2 px-8 focus:outline-none hover:bg-transparent rounded text-lg m-2"
+          onClick={simulateOptimalPageReplacement}
+        >
+          Button
+        </button>
+      </div>
+      <br />
+      {/* <button className="btn " id="button" onClick={simulateOptimalPageReplacement}>Simulate</button> */}
 
-   {tableHeading &&
-      <table className="table" id="myTable">
-        <thead>
-          <tr>
-            <th>Page</th>
-            {/* <th>New Frame</th> */}
-            {memoryState.map((_frame, index) => (
-              <th key={index}>Frame {index}</th>
-            ))}
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          {tableData.map((row, index) => (
-            <tr key={index}>
-              <td>{row.page}</td>
-               {/* <td>{row.newFrame}</td> */}
-              {row.memory.map((frame, index) => (
-              <td key={index} style={{ 
-                color: row.newFrame === index ? "darkblue" : "black", 
-                backgroundColor:row.newFrame === index ? "lightblue" :""
-              }}>{frame }</td>
+      <div className="flex flex-row">
+        {tableHeading && (
+          <table className="opr-table relative" id="myTable">
+            <thead>
+              <tr>
+                <th>Page</th>
+                {/* <th>New Frame</th> */}
+                {memoryState.map((_frame, index) => (
+                  <th key={index}>Frame {index}</th>
+                ))}
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {tableData.map((row, index) => (
+                <tr key={index}>
+                  <td>{row.page}</td>
+                  {/* <td>{row.newFrame}</td> */}
+                  {row.memory.map((frame, index) => (
+                    <td
+                      key={index}
+                      style={{
+                        color: row.newFrame === index ? "black" : "white",
+                        backgroundColor:
+                          row.hitMissStatus.Status === "Hit"
+                            ? row.newFrame === index
+                              ? "lightgreen"
+                              : ""
+                            : row.newFrame === index
+                            ? "lightcoral"
+                            : "",
+                      }}
+                    >
+                      {frame}
+                    </td>
+                  ))}
+
+                  <td
+                    style={{
+                      color:
+                        row.hitMissStatus.Status === "Hit" ? "Green" : "Red",
+                    }}
+                  >
+                    {row.hitMissStatus.Status}
+                  </td>
+                </tr>
               ))}
+            </tbody>
+          </table>
+        )}
+        <div className="flex flex-col ">
+          {pageFaultParagraph && (
+            <div className=" text-white font-bold">
+              Page Faults: {pageFaults}
+            </div>
+          )}
+          {hitParagraph && (
+            <div className=" text-white font-bold">Hits: {hits}</div>
+          )}
+          {pageFaultParagraph && (
+            <div className=" text-white font-bold">Hit ratio {hitRatio} %</div>
+          )}
+          {pageFaultParagraph && (
+            <div className="   text-white font-bold">
+              Miss ratio {missRatio} %
+            </div>
+          )}
+        </div>
+        <div class="flex justify-center items-center w-32 h-32  inset-0 m-auto">
+          <Pie data={chartData} />
+        </div>
+        {pageFaultParagraph && (
+          <button
+            className="flex justify-center items-center h-10  mx-auto  p-4  border-2 text-white   focus:outline-none hover:bg-transparent rounded text-lg"
+            onClick={refreshPage}
+          >
+            Restart
+          </button>
+        )}
+      </div>
+    </div>
+  </>
 
-               <td style={{ color: row.hitMissStatus.Status === "Hit" ? "Green" : "Red" }}>{row.hitMissStatus.Status}</td> 
-            </tr>
-          ))}
-        </tbody>
-      </table>}
-      
-      
-    
-    {pageFaultParagraph && <p className="faults">Page Faults: {pageFaults}</p>}
-    {hitParagraph && <p className="faults">Hits: {hits}</p>}
-  {pageFaultParagraph &&<p >Hit ratio {hitRatio} %</p>}
-  {pageFaultParagraph &&<p >Miss ratio {missRatio} %</p>}
-   
-    <div className="chart-container"><Pie data={chartData} /></div>
-    {pageFaultParagraph && <button className="btn" onClick={refreshPage}>Restart </button>}
-    
-  </div>
-);
+  );
 }
 
 export default OptimalPageReplacement;

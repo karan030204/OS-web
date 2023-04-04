@@ -18,6 +18,9 @@ import {
 import "./PriorityTable.css";
 import DeleteIcon from "@mui/icons-material/Delete";
 import NavbarOfHome from "./NavbarOfHome";
+import Particle from "./Particle";
+import NewNavbar from "./NewNavbar";
+import Footer from "./Footer";
 
 function PriorityScheduling(props) {
   const Processes = [createData("1", "", "", "", "", "", "", "")];
@@ -62,6 +65,7 @@ function PriorityScheduling(props) {
     const t = process;
   };
 
+
   //Delete Process
   const deleteProcess = (PID) => {
     const newProcess = process.filter((CurrProcess) => {
@@ -70,6 +74,7 @@ function PriorityScheduling(props) {
     //newProcess becomes new Array and it filtered out the process which we have clicked
     setProcess(newProcess);
   };
+  
 
   //getting priority
   const Priority = (e, i) => {
@@ -108,7 +113,6 @@ function PriorityScheduling(props) {
     }
   };
 
-
   const getColor = (data) => {
     let flag = 0;
     if (colors[data]) {
@@ -134,7 +138,6 @@ function PriorityScheduling(props) {
   };
   // const priorityPreemptive = require("../models/CPUScheduling");
 
-
   //Result
   const Result = async (process) => {
     setIsResultClicked(true);
@@ -157,25 +160,33 @@ function PriorityScheduling(props) {
     }
   };
 
-  
-
   return (
     <>
-      <NavbarOfHome />
+      <Particle />
+      <NewNavbar />
       <TableContainer
         component={Paper}
-        sx={{ width: "100%", alignItems: "center", justifyContent: "center" }}
-      >
-        <Table sx={{ minWidth: 100 }} aria-label="simple table">
+        sx={{
+          width: "100 %",
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor: "transparent",
+          marginTop:"130px"
+        }}
+        >
+          <h1 className="text-gray-200 flex justify-center items-center mb-5 ">Priority Preemptive Scheduling Algorithm</h1>
+        <Table sx={{ minWidth: 80 }} aria-label="simple table">
           {/* Header */}
           <TableHead>
-            <TableRow style={{ backgroundColor: "#212121" }}>
+            <TableRow
+              style={{ backgroundColor: "transparent", color: "white" }}
+            >
               <TableCell
                 style={{
                   fontFamily: "Raleway",
                   color: "white",
                   fontSize: "1.2em",
-                  fontWeight: "100",
+                  fontWeight: "900",
                 }}
               >
                 PID
@@ -186,7 +197,7 @@ function PriorityScheduling(props) {
                   color: "white",
                   fontSize: "1.2em",
                   fontFamily: "Raleway",
-                  fontWeight: "100",
+                  fontWeight: "900",
                 }}
               >
                 Priority&nbsp;
@@ -197,7 +208,7 @@ function PriorityScheduling(props) {
                   color: "white",
                   fontSize: "1.2em",
                   fontFamily: "Raleway",
-                  fontWeight: "100",
+                  fontWeight: "900",
                 }}
               >
                 Arrival Time (AT)
@@ -208,7 +219,7 @@ function PriorityScheduling(props) {
                   color: "white",
                   fontSize: "1.2em",
                   fontFamily: "Raleway",
-                  fontWeight: "100",
+                  fontWeight: "900",
                 }}
               >
                 Burst Time&nbsp;(BT)
@@ -219,7 +230,7 @@ function PriorityScheduling(props) {
                   color: "white",
                   fontSize: "1.2em",
                   fontFamily: "Raleway",
-                  fontWeight: "100",
+                  fontWeight: "900",
                 }}
               >
                 Completion Time&nbsp;(CT)
@@ -230,7 +241,7 @@ function PriorityScheduling(props) {
                   color: "white",
                   fontSize: "1.2em",
                   fontFamily: "Raleway",
-                  fontWeight: "100",
+                  fontWeight: "900",
                 }}
               >
                 TurnAround Time(TA)
@@ -241,7 +252,7 @@ function PriorityScheduling(props) {
                   color: "white",
                   fontSize: "1.2em",
                   fontFamily: "Raleway",
-                  fontWeight: "100",
+                  fontWeight: "900",
                 }}
               >
                 Waiting time&nbsp;(WT)
@@ -252,7 +263,7 @@ function PriorityScheduling(props) {
                   color: "white",
                   fontSize: "1.2em",
                   fontFamily: "Raleway",
-                  fontWeight: "100",
+                  fontWeight: "900",
                 }}
               >
                 Response Time(RT)
@@ -263,7 +274,7 @@ function PriorityScheduling(props) {
                   color: "white",
                   fontSize: "1.2em",
                   fontFamily: "Raleway",
-                  fontWeight: "100",
+                  fontWeight: "900",
                 }}
               >
                 Delete Process&nbsp;
@@ -280,20 +291,28 @@ function PriorityScheduling(props) {
                   "&:last-child td, &:last-child th": {
                     border: 0,
                     fontSize: "",
+                    color: "white",
                   },
+                  color: "white", // Add this line
                 }}
               >
-                <TableCell component="th" scope="row">
+                <TableCell
+                  style={{ color: "White" }}
+                  component="th"
+                  scope="row"
+                >
                   {process.PID}
                 </TableCell>
-                <TableCell align="center">
+                <TableCell align="center" style={{ color: "white" }}>
                   <Box
                     component="form"
                     sx={{
                       "& .MuiTextField-root": { m: 1, width: "22ch" },
+                      color: "white",
                     }}
                   >
                     <TextField
+                    type="number"
                       required
                       id="priority"
                       label="Priority"
@@ -303,18 +322,31 @@ function PriorityScheduling(props) {
                       onChange={(e) => Priority(e, i)}
                       error={error !== ""}
                       helperText={error}
+                      inputProps={{
+                        style: { color: "white" },
+                      }}
+                      InputProps={{
+                        style: { color: "white" },
+                      }}
+                      InputLabelProps={{
+                        style: { color: "white" },
+                      }}
+                      style={{borderBottom: "1px solid gray"}}
                     />
                   </Box>
                 </TableCell>
-                <TableCell align="center">
+                <TableCell align="center" style={{ color: "white" }}>
                   <Box
                     component="form"
                     sx={{
                       "& .MuiTextField-root": { m: 1, width: "22ch" },
+                      color: "white",
                     }}
                   >
                     <TextField
                       required
+                      type="number"
+                      sx={{ color: "white" }}
                       id="arrival_time"
                       label="Arrival Time"
                       autoComplete="current-password"
@@ -323,18 +355,32 @@ function PriorityScheduling(props) {
                       onChange={(e) => arrivalTime(e, i)}
                       error={error1 !== ""}
                       helperText={error1}
+                      inputProps={{
+                        style: { color: "white" },
+                      }}
+                      InputProps={{
+                        style: { color: "white" },
+                      }}
+                      InputLabelProps={{
+                        style: { color: "white" },
+                      }}
+                      style={{borderBottom: "1px solid gray"}}
+
                     />
                   </Box>
                 </TableCell>
-                <TableCell align="center">
+                <TableCell align="center" style={{ color: "white" }}>
                   <Box
                     component="form"
                     sx={{
                       "& .MuiTextField-root": { m: 1, width: "22ch" },
+                      color: "white",
                     }}
+                    style={{ color: "white" }}
                   >
                     <TextField
                       required
+                      type="number"
                       className="bursttime"
                       id="burst_time"
                       label="Burst Time "
@@ -343,14 +389,30 @@ function PriorityScheduling(props) {
                       onChange={(e) => burstTime(e, i)}
                       error={error2 !== ""}
                       helperText={error2}
+                      InputProps={{
+                        style: { color: "white" },
+                      }}
+                      InputLabelProps={{
+                        style: { color: "white" },
+                      }}
+                      style={{borderBottom: "1px solid gray"}}
+
                     />
                   </Box>
                 </TableCell>
-                <TableCell align="center">{process.Completion_Time}</TableCell>
-                <TableCell align="center">{process.TurnAround_Time}</TableCell>
-                <TableCell align="center">{process.Waiting_Time}</TableCell>
-                <TableCell align="center">{process.Response_Time}</TableCell>
-                <TableCell align="center">
+                <TableCell align="center" style={{ color: "white" }}>
+                  {process.Completion_Time}
+                </TableCell>
+                <TableCell align="center" style={{ color: "white" }}>
+                  {process.TurnAround_Time}
+                </TableCell>
+                <TableCell align="center" style={{ color: "white" }}>
+                  {process.Waiting_Time}
+                </TableCell>
+                <TableCell align="center" style={{ color: "white" }}>
+                  {process.Response_Time}
+                </TableCell>
+                <TableCell align="center" style={{ color: "white" }}>
                   <IconButton
                     variant="contained"
                     color="error"
@@ -386,6 +448,7 @@ function PriorityScheduling(props) {
           onClick={(e) => {
             Result(process);
           }}
+          style={{ color: "black", backgroundColor: "#FFFFFF" }}
         >
           Result
         </Button>

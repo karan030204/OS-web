@@ -1,122 +1,124 @@
-.optimal{
-  text-align: center;
- 
+
+  .head{
+    font-size: 40px;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    margin-bottom: 20px;
+    margin-top: 10px;
+  }
   
- }
-
-.optimal .head{
-  font-size: 40px;
-  font-weight: bold;
-  font-family: Arial, Helvetica, sans-serif;
-  text-align: center;
-  margin-bottom: 20px;
-  margin-top: 10px;
-  color: rgb(91, 28, 150);
-}
-
-.optimal  .table {
+   .opr-table {
+     margin: 25px 0;
+     font-size: 0.9em;
+     font-family: sans-serif;
+     min-width: 400px;
+     box-shadow: 0 0 60px rgba(255, 255, 255, 0.15);
+     margin-left: auto;
+     margin-right: auto;
+     border-color: rgb(255, 255, 255);
+     border-width:1px;
   
-   margin: 25px 0;
-   font-size: 0.9em;
-   font-family: sans-serif;
-   min-width: 400px;
-   box-shadow: 0 0 60px rgba(0, 0, 0, 0.15);
-   margin-left: auto;
-   margin-right: auto;
-   border-color: rgb(7, 7, 7);
-   border-width: 2px;
-
+     /* padding-left: 800px; */
+     
+   }
    
-   
- }
- 
-.optimal  .table  tr {
-   background-color: #ebe7f4;
-   color: #010e0c;
-   text-align: left;
-   font-weight: bold;
-   
- }
- .optimal .table th{
-   background-color: rgb(168, 94, 205);
-   padding: 12px 15px;
-   text-align: center;
- 
- }
- .optimal .table td {
+   .opr-table  tr {
+     background-color: transparent;
+     color: white;
+     text-align: left;
+     font-weight: bold;
+     
+   }
+   .opr-table th{
+     background-color: transparent;
      padding: 12px 15px;
      text-align: center;
-     
- }
- 
- .optimal .table tr:nth-of-type(even) {
-   background-color: #f3f3f3;
- }
- 
- .optimal .table  tr:last-of-type {
-   border-bottom: 2px solid #0c0d0d;
+     color: white;
    
- }
- .optimal #myTable tr:hover {
-  background-color: rgb(203, 218, 225);
-}
- 
- .optimal .btn {
-   background-color: #fff;
-   border: rgb(20, 190, 247);
-   color: black;
-   padding: 10px 10px;
-   text-align: center;
-   margin: 2spx 2px;
-   transition: 0.3s;
-   display: inline-block;
-   text-decoration: none;
-   display: inline-block;
-   font-size: 15px;
-   font-family: Arial, Helvetica, sans-serif;
-   cursor: pointer;
-   border-radius: 5px;
-   margin-top: 10px;
-   margin-left: 10px;
- }
- 
- .optimal .btn:hover {
-  background-image: linear-gradient( blueviolet,purple);
-   color: white;
- }
- .optimal input{
-   font-weight: bold;
-   border-radius: 3px;
-   padding: 8px;  
-   margin: 5px 15px;
- }
-
-
- .optimal .label2,.label1{
-   font-weight: bold;
-   font-size: 19px;
- }
-
- .optimal .faults {
-  font-size: 18px;
-  font-weight: bold;
-  margin-right: 10px;
-  text-align: center;
-  font-family: Arial, Helvetica, sans-serif;
-  margin-top: 20px;
-  /* padding-bottom: 500px; */}
-  .optimal .chart-container {
+   }
+   .opr-table td {
+       padding: 12px 15px;
+       text-align: center;
+       color: white;
+       
+   }
+   
+   .opr-table tr:nth-of-type(even) {
+     background-color: transparent;
+     color: white;
+   }
+   
+   .opr-table  tr:last-of-type {
+     border-bottom: 1px solid #ffffff;
+     color: white;
+     
+   }
+   #myTable tr:hover {
+    background-color: rgb(223, 193, 237);
+    /* background-color: lightblue; */
+  }
+   
+   .btn {
+     background-color: #ddd;
+     border: rgb(20, 190, 247);
+     color: black;
+     padding: 10px 10px;
+     text-align: center;
+     margin: 2spx 2px;
+     transition: 0.3s;
+     display: inline-block;
+     text-decoration: none;
+     display: inline-block;
+     font-size: 15px;
+     font-family: Arial, Helvetica, sans-serif;
+     cursor: pointer;
+     border-radius: 5px;
+     margin-top: 10px;
+     margin-left: 10px;
+   }
+   
+   .btn:hover {
+     background-color: rgb(128, 137, 145);
+     color: white;
+   }
+   input{
+     font-weight: bold;
+     border-radius: 3px;
+     padding: 8px;  
+     margin: 5px 15px;
+   }
+  /* .op{
+    padding-left: 800px;
+    margin: -330px 0;
+    margin-left: auto;
+    margin-right: auto;
+   
+   
+  } */
+  
+   .label2,.label1{
+     font-weight: bold;
+     font-size: 19px;
+   }
+  
+   .faults {
+    font-size: 18px;
+    font-weight: bold;
+    margin-right: 10px;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: 20px;
+    /* padding-bottom: 500px; */
+  }
+  
+  .chart-container {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 20vh;
+   }
+  
+   .chart-container:hover {
+    background-color: #639066, #ef9f9f;
   }
-  .optimal{
-      border: 0px solid yellow;
-        background-color:antiquewhite;
-        margin-left:30px ;
-        margin-right: 30px;
-        top: -5px;
-        border-radius: 10px;
-        margin-bottom: 30px;
-    }

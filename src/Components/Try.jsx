@@ -10,6 +10,8 @@ import DialogTitle from "@mui/material/DialogTitle";
 import Alert from '@mui/material/Alert';
 import NavbarOfHome from "./NavbarOfHome";
 import Footer from "./Footer";
+import NewNavbar from "./NewNavbar";
+import Particle from "./Particle";
 
 let BALL_DISTANCE = 157;
 let BALL_COUNT = 1;
@@ -188,8 +190,8 @@ const Try = () => {
 
   return (
     <>
-    <NavbarOfHome/>
-    <h1 className="flex justify-center truncate text-3xl font-bold mt-10 ">Peterson's Algorithm Animation</h1>
+    <NewNavbar/>
+    <Particle/>
       <div
         style={{
           position: "relative",
@@ -266,7 +268,6 @@ const Try = () => {
           <Button onClick={handleClose}>OK</Button>
         </DialogActions>
       </Dialog>      
-      <Footer/>
     
     </>
 
