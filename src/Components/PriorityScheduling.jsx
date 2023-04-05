@@ -17,10 +17,8 @@ import {
 } from "@mui/material";
 import "./PriorityTable.css";
 import DeleteIcon from "@mui/icons-material/Delete";
-import NavbarOfHome from "./NavbarOfHome";
 import Particle from "./Particle";
 import NewNavbar from "./NewNavbar";
-import Footer from "./Footer";
 
 function PriorityScheduling(props) {
   const Processes = [createData("1", "", "", "", "", "", "", "")];
@@ -55,8 +53,11 @@ function PriorityScheduling(props) {
   const [error2, setError2] = useState("");
   const [gantArray, setgantArray] = useState([]);
   const [isResultClicked, setIsResultClicked] = useState(false);
+  const [isValidBurstTime, setIsValidBurstTime] = useState(false);
+  const [isValidArrivalTime, setIsValidArrivalTime] = useState(false);
+  const [isValidPriority, setIsValidPriority] = useState(false);
 
-  // const regex = /^[+]?([1-9][0-9]*(?:[\.][0-9]*)?|0*\.0*[1-9][0-9]*)(?:[eE][+-][0-9]+)?$/
+  // const regex = /^[+]?([1-9][0-9](?:[\.][0-9])?|0\.0[1-9][0-9]*)(?:[eE][+-][0-9]+)?$/
   //Add Process
   const addProcess = (i) => {
     let pid = Math.floor(100 * Math.random());
@@ -65,7 +66,6 @@ function PriorityScheduling(props) {
     const t = process;
   };
 
-
   //Delete Process
   const deleteProcess = (PID) => {
     const newProcess = process.filter((CurrProcess) => {
@@ -73,13 +73,17 @@ function PriorityScheduling(props) {
     });
     //newProcess becomes new Array and it filtered out the process which we have clicked
     setProcess(newProcess);
+    setIsValidArrivalTime(true);
+    setIsValidBurstTime(true);
+    setIsValidPriority(true);
   };
-  
 
   //getting priority
   const Priority = (e, i) => {
     const newValue = e.target.value;
-    if (!isNaN(newValue)) {
+    setIsValidPriority(newValue.trim() !== '' && !isNaN(newValue) );
+
+    if (!isNaN(newValue) && newValue !== '' ) {
       const t = process;
       t[i]["Priority"] = newValue;
       setProcess(t);
@@ -91,7 +95,11 @@ function PriorityScheduling(props) {
 
   const arrivalTime = (e, i) => {
     const newValue = e.target.value;
-    if (!isNaN(newValue)) {
+    setIsValidArrivalTime(newValue.trim() !== '' && !isNaN(newValue) && parseInt(newValue) >= 0);
+
+    if (!isNaN(newValue) && newValue>=0 && newValue !== '') 
+    
+    {
       const t = process;
       t[i]["Arrival_Time"] = e.target.value;
       setProcess(t);
@@ -103,14 +111,16 @@ function PriorityScheduling(props) {
 
   const burstTime = (e, i) => {
     const newValue = e.target.value;
-    if (!isNaN(newValue)) {
+    setIsValidBurstTime(newValue.trim() !== '' && !isNaN(newValue) && parseInt(newValue)>= 0);
+
+    if (!isNaN(newValue) && newValue>=0 && newValue !== '') {
       const t = process;
       t[i]["Burst_Time"] = e.target.value;
       setProcess(t);
       setError2("");
     } else {
       setError2("Please enter a positive number");
-    }
+   }   
   };
 
   const getColor = (data) => {
@@ -162,8 +172,9 @@ function PriorityScheduling(props) {
 
   return (
     <>
+
+      <NewNavbar/>
       <Particle />
-      <NewNavbar />
       <TableContainer
         component={Paper}
         sx={{
@@ -171,10 +182,10 @@ function PriorityScheduling(props) {
           alignItems: "center",
           justifyContent: "center",
           backgroundColor: "transparent",
-          marginTop:"130px"
+          marginTop:"7em"
         }}
         >
-          <h1 className="text-gray-200 flex justify-center items-center mb-5">Priority Preemptive Scheduling Algorithm</h1>
+          <h1 className="flex justify-center items-center text-white mb-5 font-bold ">Priority Preemptive Scheduling Algorithm</h1>
         <Table sx={{ minWidth: 80 }} aria-label="simple table">
           {/* Header */}
           <TableHead>
@@ -319,7 +330,25 @@ function PriorityScheduling(props) {
                       defaultValue={process.Priority}
                       autoComplete="current-password"
                       variant="standard"
-                      onChange={(e) => Priority(e, i)}
+                     // onChange={(e) => Priority(e, i)}
+                      onChange={(e) => {
+                        if (e.target.value.trim() === "") {
+                          setError("Priority cannot be empty");
+                          setIsValidPriority(false);
+                          } 
+                          else {
+                          setError("");
+                          Priority(e, i);
+                        }
+                      }
+                    }
+                    onKeyPress={(event)=> {
+                      if (event.key === "e" || event.key === "E") {
+                          event.preventDefault();
+                        }
+
+                      }}
+                      // type="number"
                       error={error !== ""}
                       helperText={error}
                       inputProps={{
@@ -352,12 +381,28 @@ function PriorityScheduling(props) {
                       autoComplete="current-password"
                       defaultValue={process.Arrival_Time}
                       variant="standard"
-                      onChange={(e) => arrivalTime(e, i)}
+                      // type="number"
+                      inputProps={{ min: 0,}}
+                      // onChange={(e) => arrivalTime(e, i)}
+                      onChange={(e) => {
+                        if (e.target.value.trim() === "") {
+                          setError1("Arrival Time cannot be empty");
+                          setIsValidArrivalTime(false);
+                        } else {
+                          setError1("");
+                          arrivalTime(e, i);
+                        }
+                         }}
+                      onKeyPress={(event)=> {
+                        if (event.key === "e" || event.key === "E") {
+                            event.preventDefault();
+                          }
+  
+                        }}
+                       
                       error={error1 !== ""}
                       helperText={error1}
-                      inputProps={{
-                        style: { color: "white" },
-                      }}
+                     
                       InputProps={{
                         style: { color: "white" },
                       }}
@@ -386,7 +431,25 @@ function PriorityScheduling(props) {
                       label="Burst Time "
                       autoComplete="current-password"
                       variant="standard"
-                      onChange={(e) => burstTime(e, i)}
+                      // type="number"
+                      inputProps={{ min: 0,}}
+                      // onChange={(e) => burstTime(e, i)}
+                      onChange={(e) => {
+                        if (e.target.value.trim() === "") {
+                          setError2("Burst Time cannot be empty");
+                          setIsValidBurstTime(false);
+                        } else {
+                          setError2("");
+                          burstTime(e, i);
+                        }
+                        }}
+                      onKeyPress={(event)=> {
+                        if (event.key === "e" || event.key === "E") {
+                            event.preventDefault();
+                          }
+  
+                        }}
+                    
                       error={error2 !== ""}
                       helperText={error2}
                       InputProps={{
@@ -437,17 +500,31 @@ function PriorityScheduling(props) {
           variant="contained"
           overflow="scroll"
           style={{ backgroundColor: "#212121" }}
+          
           onClick={() => {
-            addProcess();
+            if (isValidBurstTime && isValidArrivalTime && isValidPriority) {
+              addProcess();
+              setIsValidBurstTime(false);
+              setIsValidArrivalTime(false);
+              setIsValidPriority(false);
+        
+           }
           }}
+          disabled={!isValidBurstTime || !isValidArrivalTime || !isValidPriority}
         >
           Add Process
         </Button>
+
+
         <Button
           variant="outlined"
-          onClick={(e) => {
-            Result(process);
+          onClick={() => {
+            if (isValidBurstTime && isValidArrivalTime && isValidPriority) {
+              Result(process);
+        
+           }
           }}
+          disabled={!isValidBurstTime || !isValidArrivalTime || !isValidPriority}
           style={{ color: "black", backgroundColor: "#FFFFFF" }}
         >
           Result
@@ -472,7 +549,9 @@ function PriorityScheduling(props) {
                   position: "absolute",
                   bottom: "-20px",
                   left: "-8px",
-                  fontSize: "1em",
+                  fontSize: "18px",
+                  color:"white",
+                  fontWeight:"800"
                 }}
               >
                 {count++}
@@ -480,10 +559,11 @@ function PriorityScheduling(props) {
             </Box>
           </>
         ))}
-        <div className="mt-24">{isResultClicked && count++}</div>
+        <div className="mt-24 text-white font-bold text-lg" >{isResultClicked && count++}</div>
       </div>
     </>
   );
 }
+
 
 export default PriorityScheduling;

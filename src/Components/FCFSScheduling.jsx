@@ -13,7 +13,6 @@ import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import { FoodBankTwoTone, QueryBuilder } from "@mui/icons-material";
 import Chart from "./Chart";
-import NavbarOfHome from "./NavbarOfHome";
 import Footer from "./Footer";
 import NewNavbar from "./NewNavbar";
 import Particle from "./Particle";
@@ -101,7 +100,7 @@ const FCFSScheduling = () => {
       {/* NAVBAR */}
       <NewNavbar/>
       <Particle/>
-      <h1 className="relative flex justify-center text-4xl font-bold mt-10">
+      <h1 className="relative flex justify-center text-4xl font-bold mt-32 text-white">
         FCFS Disk Scheduling Algorithm
       </h1>
       <div className="flex">
@@ -191,7 +190,7 @@ const FCFSScheduling = () => {
             Total Seek Time is : {sum}
           </div>
         </div>
-        {showChart && <Chart />}
+         {showChart && <Chart />}
       </div>
 
     </>

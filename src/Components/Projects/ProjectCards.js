@@ -9,14 +9,11 @@ function ProjectCards(props) {
     <Card className="project-card-view">
       <Card.Img variant="top" src={props.imgPath} alt="card-img" />
       <Card.Body>
-      <Card.Title>{props.title}</Card.Title>
+        <Card.Title>{props.title}</Card.Title>
         <Card.Text style={{ textAlign: "justify" }}>
           {props.description}
         </Card.Text>
-        <Button variant="primary" href={props.ghLink} >
-          <BsGithub /> &nbsp;
-          {props.isBlog ? "Blog" : "GitHub"}
-        </Button>
+
         {"\n"}
         {"\n"}
 
@@ -26,10 +23,12 @@ function ProjectCards(props) {
           <Button
             variant="primary"
             href={props.demoLink}
-            style={{ marginLeft: "10px" }}
+            className=" w-32 h-16 align-items-center justify-content-center"
           >
-            <CgWebsite /> &nbsp;
-            {"Demo"}
+             <div class="flex items-center text-center">
+            <CgWebsite style={{ marginRight: "5px" }} />
+            <span className="flex justify-center items-center text-xl m-2">Demo</span>
+            </div>
           </Button>
         )}
       </Card.Body>

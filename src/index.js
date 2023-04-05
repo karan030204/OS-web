@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
-import PetersonAlgorithm from './Components/PetersonAlgorithm';
 import {createBrowserRouter, RouterProvider} from "react-router-dom"
 import Try from './Components/Try';
 import FCFSScheduling from './Components/FCFSScheduling';

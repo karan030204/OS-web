@@ -1,12 +1,10 @@
 // import AboutPage from './AbouPage';
 import './App.css';
-import PetersonAlgorithm from './Components/PetersonAlgorithm';
 import PriorityTable from './Components/FCFSScheduling';
 import Try from './Components/Try';
 import FCFSScheduling from './Components/FCFSScheduling';
 import PriorityScheduling from './Components/PriorityScheduling';
 import Footer from './Components/Footer';
-import NavbarOfHome from './Components/NavbarOfHome';
 import { Routes,Route } from 'react-router-dom';
 import OptimalPageReplacement from './Components/OptimalPageReplacement';
 import Home from './Components/Home/Home';
