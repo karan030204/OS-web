@@ -19,6 +19,7 @@ function OptimalPageReplacement() {
   const [hitParagraph, setHitParagraph] = useState(false);
   const [, sethitMissStaus] = useState(0);
 
+  //HandlePageReferenceChange
   const handlePageReferencesChange = (event) => {
     const references = event.target.value
       .split("")
@@ -27,6 +28,7 @@ function OptimalPageReplacement() {
     setPageReferences(references);
   };
 
+  //Refreshpage 
   const refreshPage = () => {
     window.location.reload();
   };
@@ -139,6 +141,7 @@ function OptimalPageReplacement() {
               min="1"
               defaultValue={1}
               onChange={handleFramesChange}
+             
             />
           </div>
         </div>
@@ -229,12 +232,12 @@ function OptimalPageReplacement() {
               )}
               {pageFaultParagraph && (
                 <div className=" text-white font-bold">
-                  Hit ratio {hitRatio.toFixed(2)} %
+                  Hit ratio {hitRatio.toFixed(3)} %
                 </div>
               )}
               {pageFaultParagraph && (
                 <div className="   text-white font-bold">
-                  Miss ratio {missRatio.toFixed(2)} %
+                  Miss ratio {missRatio.toFixed(4)} %
                 </div>
               )}
             </div>
