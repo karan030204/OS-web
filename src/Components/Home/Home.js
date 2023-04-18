@@ -6,11 +6,13 @@ import NewNavbar from "../NewNavbar";
 import Type from "./Type";
 import Projects from "../Projects/Projects";
 import Particle from "../Particle";
+import Chat from "../Chat";
 
 function Home() {
   return (
     <section>
       <NewNavbar/>
+
       <Container fluid className="home-section" id="home">
         <Particle/>
         <Container className="home-content">

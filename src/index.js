@@ -10,6 +10,7 @@ import PriorityScheduling from './Components/PriorityScheduling';
 import Home from './Components/Home/Home';
 import Projects from './Components/Projects/Projects';
 import About from './Components/About/About';
+import Chat from './Components/Chat';
 
 
 
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
   {
     path: "/about",
     element: <About />,
+  },
+  {
+    path: "/bot",
+    element: <Chat/>,
   },
 
 ])

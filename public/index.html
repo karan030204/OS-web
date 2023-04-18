@@ -1,26 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" href="OS.jpeg" />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
-    />
 
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="Web site created using create-react-app"
-    />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-    <!--
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" href="OS.jpeg" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#000000" />
+  <meta name="description" content="Web site created using create-react-app" />
+  <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+  <!--
       manifest.json provides metadata used when your web app is installed on a
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
     -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <!--
+  <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+  <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
       Only files inside the `public` folder can be referenced from the HTML.
@@ -29,12 +24,128 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-    <title>React App</title>
-  </head>
-  <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
-    <!--
+  <title>React App</title>
+
+  <style>
+  
+  </style>
+
+</head>
+
+<body>
+
+ 
+
+  <script>
+    class Chatbox {
+      constructor() {
+        this.args = {
+          openButton: document.querySelector('.chatbox__button'),
+          chatBox: document.querySelector('.chatbox__support'),
+          sendButton: document.querySelector('.send__button')
+        }
+
+        this.state = false;
+        this.messages = [];
+      }
+
+      display() {
+        // console.log("clicked")
+        const { openButton, chatBox, sendButton } = this.args;
+
+        openButton.addEventListener('click', () => this.toggleState(chatBox))
+
+        sendButton.addEventListener('click', () => this.onSendButton(chatBox))
+
+        const node = chatBox.querySelector('input');
+        node.addEventListener("keyup", ({ key }) => {
+          if (key === "Enter") {
+            this.onSendButton(chatBox)
+          }
+        })
+      }
+
+      toggleState(chatbox) {
+        this.state = !this.state;
+
+        // show or hides the box
+        if (this.state) {
+          chatbox.classList.add('chatbox--active')
+        } else {
+          chatbox.classList.remove('chatbox--active')
+        }
+      }
+
+      async onSendButton(chatbox) {
+        var textField = chatbox.querySelector('input');
+        let text1 = textField.value
+        if (text1 === "") {
+          return;
+        }
+
+        let msg1 = { name: "User", message: text1 }
+        this.messages.push(msg1);
+
+        try {
+          let r = await fetch('http://127.0.0.1:3001/predict', {
+            method: 'POST',
+            body: JSON.stringify({ message: text1 }),
+            mode: 'cors',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+          })
+          let obj = await r.json()
+          // console.log(obj.answer);
+          let msg2 = { name: "Sam", message: obj.answer };
+          this.messages.push(msg2);
+          this.updateChatText(chatbox)
+          textField.value = ''
+        } catch (error) {
+          console.error('Error:', error);
+          alert(error);
+          this.updateChatText(chatbox)
+          textField.value = ''
+        }
+        //       .then(r => {r.json();})
+        //       .then(r => {
+        //         let msg2 = { name: "Sam", message: r.answer };
+        //         this.messages.push(msg2);
+        //         this.updateChatText(chatbox)
+        //         textField.value = ''
+
+        //     }).catch((error) => {
+        //         console.error('Error:', error);
+        //         alert(error);
+        //         this.updateChatText(chatbox)
+        //         textField.value = ''
+        //       });
+      }
+
+      updateChatText(chatbox) {
+        var html = '';
+        this.messages.slice().reverse().forEach(function (item, index) {
+          if (item.name === "Sam") {
+            html += '<div class="messages__item messages__item--visitor">' + item.message + '</div>'
+          }
+          else {
+            html += '<div class="messages__item messages__item--operator">' + item.message + '</div>'
+          }
+        });
+
+        const chatmessage = chatbox.querySelector('.chatbox__messages');
+        chatmessage.innerHTML = html;
+      }
+    }
+
+
+    const chatbox = new Chatbox();
+    chatbox.display();
+  </script>
+
+  <noscript>You need to enable JavaScript to run this app.</noscript>
+  <div id="root"></div>
+  <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
 
@@ -44,5 +155,6 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
-  </body>
+</body>
+
 </html>

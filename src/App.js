@@ -15,6 +15,8 @@ import NewNavbar from './Components/NewNavbar';
 import Projects from './Components/Projects/Projects';
 import About from './Components/About/About';
 import Particle from './Components/Particle';
+import Chatbot from './Components/Chat';
+import Chat from './Components/Chat';
 
 function App() {
   return (
@@ -37,7 +39,9 @@ function App() {
         <Route path="/priority" element={<PriorityScheduling />} />
         <Route path="/peterson" element={<Try />} />
         <Route path="/fcfs" element={<FCFSScheduling/>} />
+      
         <Route path="/opr" element={<OptimalPageReplacement/>} />
+        <Route path='/bot' element={<Chat/>}/>
         {/* <Route path="/project" element={<Projects />} />
         <Route path="/about" element={<About />} />
         <Route path="/resume" element={<ResumeNew />} /> */}
