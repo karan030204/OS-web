@@ -1,0 +1,17 @@
+.home-content{
+    display: flex;
+}
+.home-content Row {
+    width: 100%;
+}
+.canvas-wrapper{
+    width: 500px;
+    z-index: 50;
+}
+.home-content Canvas{
+    /* background-color: black; */
+    width: 75%;
+    height: 500px;
+    margin-right: 3em;
+    z-index: 50;
+}
