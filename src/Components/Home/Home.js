@@ -130,7 +130,7 @@ function Home() {
                 <ambientLight intensity={1.5} />
                 <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
                 <pointLight position={[10, 10, 10]} />
-                <ModelViewer modelPath="./Encode.glb" />
+                <ModelViewer modelPath="./earthquakes1.glb" />
               </Canvas>
             </div>
           </animated.div>
