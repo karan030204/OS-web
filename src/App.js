@@ -31,7 +31,7 @@ function App() {
       {/* <Chart/> */}
       {/* <NavbarOfHome/> */}
       <NewNavbar/>
-      <Particle/>
+      {/* <Particle/> */}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/priority" element={<PriorityScheduling />} />

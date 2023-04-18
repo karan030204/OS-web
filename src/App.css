@@ -49,3 +49,7 @@ Table{
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.home-section{
+  z-index: 999;
+}
