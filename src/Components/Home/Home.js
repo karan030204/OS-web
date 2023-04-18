@@ -128,7 +128,7 @@ function Home() {
             </Col>
           </Row>
           <animated.div className="threed-section"style={springAnimation} >
-            <div className="canvas-wrapper">
+            <div className="canvas-wrapper mr-12">
               <Canvas camera={{ position: [10, 25, 10] }}>
                 <OrbitControls />
                 <ambientLight intensity={1.5} />
